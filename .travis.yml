@@ -39,15 +39,13 @@ before_script:
 script:
     - date
     - ls -al
-    - make allocator-tests
-    - ls -al
     - make html
     - ls -al
-    - make Allocate.log
+    - make Allocator.log
     - ls -al
     - make test
     - ls -al
     - make check
 
 after_failure:
-    - cat TestAllocate.tmp
+    - cat TestAllocator.tmp

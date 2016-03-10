@@ -1,17 +1,9 @@
-FILES :=                              \
-    .travis.yml                       \
-    allocator-tests/soa322-RunAllocator.in   \
-    allocator-tests/soa322-RunAllocator.out  \
-    allocator-tests/soa322-TestAllocator.c++ \
-    allocator-tests/soa322-TestAllocator.out \
-    Allocator.c++                       \
-    Allocator.h                         \
-    Allocator.log                       \
-    html                              \
-    RunAllocator.c++                    \
-    RunAllocator.in                     \
-    RunAllocator.out                    \
-    TestAllocator.c++                   \
+FILES :=              \
+    .travis.yml       \
+    Allocator.h       \
+    Allocator.log     \
+    html              \
+    TestAllocator.c++ \
     TestAllocator.out
 
 CXX        := g++-4.8
@@ -20,6 +12,23 @@ LDFLAGS    := -lgtest -lgtest_main -pthread
 GCOV       := gcov-4.8
 GCOVFLAGS  := -fprofile-arcs -ftest-coverage
 VALGRIND   := valgrind
+
+html: Doxyfile Allocator.h TestAllocator.c++
+	doxygen Doxyfile
+
+Allocator.log:
+	git log > Allocator.log
+
+Doxyfile:
+	doxygen -g
+
+TestAllocator: Allocator.h TestAllocator.c++
+	$(CXX) $(CXXFLAGS) $(GCOVFLAGS) TestAllocator.c++ -o TestAllocator $(LDFLAGS)
+
+TestAllocator.tmp: TestAllocator
+	$(VALGRIND) ./TestAllocator                                         >  TestAllocator.tmp 2>&1
+	$(GCOV) -b TestAllocator.c++ | grep -A 5 "File 'TestAllocator.c++'" >> TestAllocator.tmp
+	cat TestAllocator.tmp
 
 check:
 	@not_found=0;                                 \
@@ -44,8 +53,6 @@ clean:
 	rm -f *.gcda
 	rm -f *.gcno
 	rm -f *.gcov
-	rm -f RunAllocator
-	rm -f RunAllocator.tmp
 	rm -f TestAllocator
 	rm -f TestAllocator.tmp
 
@@ -55,7 +62,6 @@ config:
 scrub:
 	make clean
 	rm -f  Allocator.log
-	rm -rf allocator-tests
 	rm -rf html
 	rm -rf latex
 
@@ -66,32 +72,4 @@ status:
 	git remote -v
 	git status
 
-test: RunAllocator.tmp TestAllocator.tmp
-
-allocator-tests:
-	git clone https://github.com/cs371p-spring-2016/allocator-tests.git
-
-html: Doxyfile Allocator.h Allocator.c++ RunAllocator.c++ TestAllocator.c++
-	doxygen Doxyfile
-
-Allocator.log:
-	git log > Allocator.log
-
-Doxyfile:
-	doxygen -g
-
-RunAllocator: Allocator.h Allocator.c++ RunAllocator.c++
-	$(CXX) $(CXXFLAGS) $(GCOVFLAGS) Allocator.c++ RunAllocator.c++ -o RunAllocator
-
-RunAllocator.tmp: RunAllocator
-	./RunAllocator < RunAllocator.in > RunAllocator.tmp
-	diff RunAllocator.tmp RunAllocator.out
-
-TestAllocator: Allocator.h Allocator.c++ TestAllocator.c++
-	$(CXX) $(CXXFLAGS) $(GCOVFLAGS) Allocator.c++ TestAllocator.c++ -o TestAllocator $(LDFLAGS)
-
-TestAllocator.tmp: TestAllocator
-	$(VALGRIND) ./TestAllocator                                       >  TestAllocator.tmp 2>&1
-	$(GCOV) -b Allocator.c++     | grep -A 5 "File 'Allocator.c++'"     >> TestAllocator.tmp
-	$(GCOV) -b TestAllocator.c++ | grep -A 5 "File 'TestAllocator.c++'" >> TestAllocator.tmp
-	cat TestAllocator.tmp
+test: TestAllocator.tmp
