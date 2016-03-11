@@ -162,3 +162,4 @@ TYPED_TEST(TestAllocator3, test_10) {
             --e;
             x.destroy(e);}
         x.deallocate(b, s);}}
+

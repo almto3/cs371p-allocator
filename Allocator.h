@@ -64,6 +64,7 @@ class Allocator {
         // ----
         // data
         // ----
+        int s1 = 0, s2 = 0;
 
         char a[N];
 
@@ -122,6 +123,18 @@ class Allocator {
             //(*this)[0] = 0; // replace!
             try{
 
+              if ( N < (sizeof(T) + (2 * sizeof(int)) ) )
+                throw std::bad_alloc ();
+            s1 = - (sizeof(T) + (2 * sizeof(int)) );
+            s2 = s1;
+            
+            for (int d = 0; d<4; d++)//s1
+                a[d] = (s1 >> (8*d)) & 0xff;
+
+            for (int d = 4; d<0; d--)//s2
+                a[N - d] = (s2 >> (8*d)) & 0xff;
+
+
             }
             catch (bad_alloc&){
                 throw;
@@ -130,7 +143,6 @@ class Allocator {
 
             }
 
-                
             // initialize the variables !!
                 
             assert(valid());
@@ -154,7 +166,30 @@ class Allocator {
          * throw a bad_alloc exception, if n is invalid
          */
         pointer allocate (size_type n) {
+
+            if (n < (N - 8))
+                return null;
+
             
+            
+            int i = 0;  //i is position/value of the sentinel
+            int sen1 = 0, sen2 = 0;
+            
+
+            while (i < N){
+                sen1 = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
+                i = i + 4 + abs( (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]));
+                sen2 = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
+                i += 4;
+
+                if (sen1 != sen2)
+                    return false;
+            }
+
+            if (i == N)
+                return true;
+            else
+                return false;
 
             assert(valid());
             return nullptr;}             // replace!
@@ -205,5 +240,13 @@ class Allocator {
          */
         const int& operator [] (int i) const {
             return *reinterpret_cast<const int*>(&a[i]);}};
+
+vector<unsigned char> intToBytes(int paramInt)
+{
+     vector<unsigned char> arrayOfByte(4);
+     for (int i = 0; i < 4; i++)
+         arrayOfByte[3 - i] = (paramInt >> (i * 8));
+     return arrayOfByte;
+}
 
 #endif // Allocator_h
