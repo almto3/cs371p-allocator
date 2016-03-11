@@ -20,6 +20,12 @@
 // Allocator
 // ---------
 
+
+//allocator<double, 100> x;
+//double* p = x.allocate(3); // sometimes gives you more than what you are asking for
+//…
+//x.deallocate(p); // frees a block and maybe coalesces it
+
 template <typename T, std::size_t N>
 class Allocator {
     public:
@@ -67,11 +73,35 @@ class Allocator {
         /**
          * O(1) in space
          * O(n) in time
-         * <your documentation>
+         * Basically, this version checks that the sentinals give correct values, doesn't check for the validity of the data, maybe we need to implement it ?!?!
          */
         bool valid () const {
-            // <your code>
-            return true;}
+
+            int i = 0;  //i is the first sentinal
+
+            while (i < N){
+
+                i += (b[3] << 24) | (b[2] << 16) | (b[1] << 8) | (b[0]); 
+
+                // if the blocks are free
+                if (i > 0)
+                {
+                    i += 8;
+                }
+                // if the blocks are occupied
+                else if (i <0)
+                {
+                    i = -i + 8;
+                }
+                else        //i == 0
+                    return;     //what to do here?
+            }
+
+            if (i == N)
+                return true;
+            else
+                return false;
+        }
 
         /**
          * O(1) in space
@@ -94,9 +124,13 @@ class Allocator {
          * throw a bad_alloc exception, if N is less than sizeof(T) + (2 * sizeof(int))
          */
         Allocator () {
-            (*this)[0] = 0; // replace!
+            //(*this)[0] = 0; // replace!
+            if ( N < ( sizeof(T) + (2 * sizeof(int)) )
+                throw bad_alloc;
+                
             // <your code>
-            assert(valid());}
+            assert(valid());
+        }
 
         // Default copy, destructor, and copy assignment
         // Allocator  (const Allocator&);
