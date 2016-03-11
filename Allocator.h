@@ -73,28 +73,22 @@ class Allocator {
         /**
          * O(1) in space
          * O(n) in time
-         * Basically, this version checks that the sentinals give correct values, doesn't check for the validity of the data, maybe we need to implement it ?!?!
+         * Basically, this version checks that the sentinels give correct values, doesn't check for the validity of the data, also checks that the first and last sentinels match
          */
         bool valid () const {
 
-            int i = 0;  //i is the first sentinal
+            int i = 0;  //i is position/value of the sentinel
+            int sen1 = 0, sen2 = 0;
+            
 
             while (i < N){
+                sen1 = a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
+                i = i + 4 + abs(a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]));
+                sen2 = a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
+                i += 4;
 
-                i += (b[3] << 24) | (b[2] << 16) | (b[1] << 8) | (b[0]); 
-
-                // if the blocks are free
-                if (i > 0)
-                {
-                    i += 8;
-                }
-                // if the blocks are occupied
-                else if (i <0)
-                {
-                    i = -i + 8;
-                }
-                else        //i == 0
-                    return;     //what to do here?
+                if (sen1 != sen2)
+                    return false;
             }
 
             if (i == N)
@@ -128,7 +122,8 @@ class Allocator {
             if ( N < ( sizeof(T) + (2 * sizeof(int)) )
                 throw bad_alloc;
                 
-            // <your code>
+            // initialize the variables !!
+                
             assert(valid());
         }
 
