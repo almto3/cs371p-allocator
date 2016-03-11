@@ -16,6 +16,7 @@
 #include <new>       // bad_alloc, new
 #include <stdexcept> // invalid_argument
 
+using namespace std;
 // ---------
 // Allocator
 // ---------
@@ -82,9 +83,9 @@ class Allocator {
             
 
             while (i < N){
-                sen1 = a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
-                i = i + 4 + abs(a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]));
-                sen2 = a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
+                sen1 = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
+                i = i + 4 + abs( (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]));
+                sen2 = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
                 i += 4;
 
                 if (sen1 != sen2)
@@ -119,8 +120,16 @@ class Allocator {
          */
         Allocator () {
             //(*this)[0] = 0; // replace!
-            if ( N < ( sizeof(T) + (2 * sizeof(int)) )
-                throw bad_alloc;
+            try{
+
+            }
+            catch (bad_alloc&){
+                throw;
+            }
+            catch( ... ){
+
+            }
+
                 
             // initialize the variables !!
                 
@@ -145,7 +154,8 @@ class Allocator {
          * throw a bad_alloc exception, if n is invalid
          */
         pointer allocate (size_type n) {
-            // <your code>
+            
+
             assert(valid());
             return nullptr;}             // replace!
 
