@@ -119,13 +119,13 @@ class Allocator {
          * O(1) in time
          * throw a bad_alloc exception, if N is less than sizeof(T) + (2 * sizeof(int))
          */
-        Allocator () {
+        Allocator () {//sets sentinels 
             //(*this)[0] = 0; // replace!
             try{
 
-              if ( N < (sizeof(T) + (2 * sizeof(int)) ) )
+              if ( N < ( sizeof(T) + (2 * sizeof(int)) ) )
                 throw std::bad_alloc ();
-            s1 = - (sizeof(T) + (2 * sizeof(int)) );
+            s1 = - ( sizeof(T) + (2 * sizeof(int)) );
             s2 = s1;
             
             for (int d = 0; d<4; d++)//s1
@@ -165,31 +165,61 @@ class Allocator {
          * choose the first block that fits
          * throw a bad_alloc exception, if n is invalid
          */
-        pointer allocate (size_type n) {
+        pointer allocate (size_type n) {//finds first fit 
 
-            if (n < (N - 8))
-                return null;
+            if ((n * sizeof(T)) < (N - 8))
+                return null;        //or throw an exception?
 
             
             
-            int i = 0;  //i is position/value of the sentinel
-            int sen1 = 0, sen2 = 0;
+            int i = 0;  //i is position of the first sentinel
+            int sen = 0; //value of sentinel
             
 
             while (i < N){
-                sen1 = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
-                i = i + 4 + abs( (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]));
-                sen2 = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
-                i += 4;
+                sen = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
 
-                if (sen1 != sen2)
-                    return false;
+                if (sen < 0 ){      //check if it's occupied  //what about zero?!
+                    i = i + 8 + abs( sen );
+                    continue;       //test this ?!
+                }
+
+                else if (sen == (n * sizeof(T) ) ){     //perfect fit
+                    break;
+                }
+                else if (sen < (n * sizeof(T) ) ){  //check if it's free, but not enough space
+                    i = i + 8 + abs( sen );
+                    continue;       
+                }
+                else if ( (sen - (n * sizeof(T) ) ) < ( sizeof(T) + 8 ) ){  //check if it's free, but not enough space v2
+                    i = i + 8 + abs( sen );
+                    continue;     
+                }
+                else{       //it fits!
+                    break;
+                }
             }
-
+            // i is either the end of the heap or a the address to a valid block
             if (i == N)
-                return true;
-            else
-                return false;
+                throw std::bad_alloc ();
+
+            // i is a valid block
+            sen = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]); //is this correct? 
+
+            if(sen == (n * sizeof(T)) ){        //perfect fit, change pos to neg
+                (*this)[i] = -(*this)[i];
+                (*this)[i + sen + 4] = -(*this)[i];
+            }
+            else {      //not a perfect fit
+                (*this)[i] = - (n * sizeof(T) );                         //change 1st sen
+                (*this)[i + 4 + (n * sizeof(T)) ] = - (n * sizeof(T) ) ;  //change 2nd sen
+
+                int x = sen - 8 - (n * sizeof(T) );
+
+                (*this)[i + 8 + (n * sizeof(T)) ] = x;  //change 3rd sen
+                (*this)[i + 8 + (n * sizeof(T)) + x] = x;  //change 4th sen
+            }
+            
 
             assert(valid());
             return nullptr;}             // replace!
