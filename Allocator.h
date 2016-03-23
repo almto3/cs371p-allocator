@@ -15,6 +15,7 @@
 #include <cstddef>   // ptrdiff_t, size_t
 #include <new>       // bad_alloc, new
 #include <stdexcept> // invalid_argument
+#include <iostream>
 
 using namespace std;
 // ---------
@@ -82,21 +83,40 @@ class Allocator {
             int i = 0;  //i is position/value of the sentinel
             int sen1 = 0, sen2 = 0;
             
-
+            
             while (i < N){
-                sen1 = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
-                i = i + 4 + abs( (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]));
-                sen2 = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
+                cout <<"A: sen1 = " << sen1 << ", sen2 = " << sen2;
+                cout << "\ni = " << i << ", N = " << N;
+
+                sen1 = (*this)[i];
+                cout <<"\nB: sen1 = " << sen1 << " at i = " << i;
+
+                i = i + 4 + abs(sen1);
+                sen2 = (*this)[i];
+                cout <<"\tsen2 = " << sen2 << " at i = " << i;
+
                 i += 4;
 
-                if (sen1 != sen2)
-                    return false;
-            }
+                cout << "\ni = " << i << ", N = " << N << "\n\n";
 
-            if (i == N)
+                if (sen1 != sen2){
+
+                    cout <<"valid() returning false because \nsen1 = " << sen1 << ", sen2 = " << sen2;
+                    cout << "\ni = " << i << ", N = " << N << endl;
+                    return false;
+                }
+            }
+            
+
+
+            if (i == N){
+                cout <<"valid() returning true with i = " << i << ", N = " << N << "\n\n"<<endl;
                 return true;
-            else
+            }
+            else{
+                cout <<"valid() returning false because i = " << i << ", N = " << N << endl;
                 return false;
+            }
         }
 
         /**
@@ -107,7 +127,7 @@ class Allocator {
          */
         FRIEND_TEST(TestAllocator2, index);
         FRIEND_TEST(TestAllocator2, index);
-        FRIEND_TEST(TestAllocator2, index);
+        FRIEND_TEST(TestAllocator11, index);
 
         int& operator [] (int i) {
             return *reinterpret_cast<int*>(&a[i]);}
@@ -128,19 +148,35 @@ class Allocator {
 
               if ( N < ( sizeof(T) + (2 * sizeof(int)) ) )
                 throw std::bad_alloc ();
-            s1 = - ( sizeof(T) + (2 * sizeof(int)) );
+            int sen = N - 8;
+            
+           
+            /*
+
+            s1 = ( sizeof(T) + (2 * sizeof(int)) );
             s2 = s1;
             
             for (int d = 0; d<4; d++)//s1
                 a[d] = (s1 >> (8*d)) & 0xff;
 
+            
+
             for (int d = 4; d<0; d--)//s2
                 a[N - d] = (s2 >> (8*d)) & 0xff;
+            */
+            
 
+            (*this)[0] = sen;
+            (*this)[N-4] = sen;
+
+            cout << "Printing s1: " << sen << endl;
+            cout << "Printing i: " << (*this)[0] << endl;
+            cout << "Printing j: " << (*this)[N - 4] << endl;
 
             }
-            catch (bad_alloc&){
-                throw;
+            catch (bad_alloc& ia) {
+                std::cerr << "Invalid argument: " << N << " " << ia.what() << '\n';
+
             }
             catch( ... ){
                 //what to do here ?!
@@ -169,9 +205,17 @@ class Allocator {
          * throw a bad_alloc exception, if n is invalid
          */
         pointer allocate (size_type n) {//finds first fit 
+            try{
+                if ((n * sizeof(T)) > (N - 8))
+                    throw std::bad_alloc ();
+            }
+            catch (bad_alloc& ia) {
+                std::cerr << "allocate () with N = " << N << " n = " << n << " s = " << sizeof(T) << "\n" << (n * sizeof(T)) << " " << (N - 8) << "\n" << ia.what() << '\n';
 
-            if ((n * sizeof(T)) < (N - 8))
-                throw std::bad_alloc ();
+            }
+            catch( ... ){
+                //what to do here ?!
+            }
 
             
             int i = 0;  //i is position of the first sentinel
@@ -208,25 +252,37 @@ class Allocator {
             sen = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]); //is this correct? 
 
             if(sen == (n * sizeof(T)) ){        //perfect fit, change pos to neg
+                cout << "not a perfect fit\n"; 
                 (*this)[i] = -(*this)[i];
                 (*this)[i + sen + 4] = -(*this)[i];
             }
             else {      //not a perfect fit
+                cout << "not a perfect fit\n"; 
                 (*this)[i] = - (n * sizeof(T) );                         //change 1st sen
                 (*this)[i + 4 + (n * sizeof(T)) ] = - (n * sizeof(T) ) ;  //change 2nd sen
+
+                cout << "sen 1 = " << - (n * sizeof(T) ) << " at i = " << i << "\n";
+                cout << "sen 2 = " << - (n * sizeof(T) ) << " at i = " << i + 4 + (n * sizeof(T)) << "\n";
 
                 int x = sen - 8 - (n * sizeof(T) );
 
                 (*this)[i + 8 + (n * sizeof(T)) ] = x;  //change 3rd sen
-                (*this)[i + 8 + (n * sizeof(T)) + x] = x;  //change 4th sen
+                
+                //vv, changed 12 to 8, not sure if mistake or not ?!
+                (*this)[i + 12 + (n * sizeof(T)) + x] = x;  //change 4th sen
+
+                
+
+                cout << "sen 3 = " << x << " at i = " << i + 8 + (n * sizeof(T)) << "\n";
+                cout << "sen 4 = " << x << " at i = " << i + 12 + (n * sizeof(T)) + x << "\n";
             }
 
             assert(valid());
                                             //we're returning the address to the data, not the sentinel!
-           // pointer pi = &(*this)[i+4];     //totally gussed this one, maybeeee won't work
-           // return &(*this)[i+4];
+            pointer pi = (pointer)&(*this)[i+4];     //totally gussed this one, maybeeee won't work
+            return pi;
 
-           return nullptr;                      // return a pointer containg the address of i
+           // return nullptr;                      // return a pointer containg the address of i
            }             
 
         // ---------
