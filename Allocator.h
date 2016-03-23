@@ -106,6 +106,9 @@ class Allocator {
          * https://code.google.com/p/googletest/wiki/AdvancedGuide#Private_Class_Members
          */
         FRIEND_TEST(TestAllocator2, index);
+        FRIEND_TEST(TestAllocator2, index);
+        FRIEND_TEST(TestAllocator2, index);
+
         int& operator [] (int i) {
             return *reinterpret_cast<int*>(&a[i]);}
 
@@ -140,7 +143,7 @@ class Allocator {
                 throw;
             }
             catch( ... ){
-
+                //what to do here ?!
             }
 
             // initialize the variables !!
@@ -168,18 +171,16 @@ class Allocator {
         pointer allocate (size_type n) {//finds first fit 
 
             if ((n * sizeof(T)) < (N - 8))
-                return null;        //or throw an exception?
+                throw std::bad_alloc ();
 
-            
             
             int i = 0;  //i is position of the first sentinel
             int sen = 0; //value of sentinel
             
-
             while (i < N){
                 sen = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
 
-                if (sen < 0 ){      //check if it's occupied  //what about zero?!
+                if (sen <= 0 ){      //check if it's occupied  //what about zero?!
                     i = i + 8 + abs( sen );
                     continue;       //test this ?!
                 }
@@ -199,7 +200,7 @@ class Allocator {
                     break;
                 }
             }
-            // i is either the end of the heap or a the address to a valid block
+            // i is either the end of the heap or the address to a valid block
             if (i == N)
                 throw std::bad_alloc ();
 
@@ -219,10 +220,14 @@ class Allocator {
                 (*this)[i + 8 + (n * sizeof(T)) ] = x;  //change 3rd sen
                 (*this)[i + 8 + (n * sizeof(T)) + x] = x;  //change 4th sen
             }
-            
 
             assert(valid());
-            return nullptr;}             // replace!
+                                            //we're returning the address to the data, not the sentinel!
+           // pointer pi = &(*this)[i+4];     //totally gussed this one, maybeeee won't work
+           // return &(*this)[i+4];
+
+           return nullptr;                      // return a pointer containg the address of i
+           }             
 
         // ---------
         // construct
@@ -248,8 +253,71 @@ class Allocator {
          * <your documentation>
          */
         void deallocate (pointer p, size_type) {
-            // <your code>
-            assert(valid());}
+            
+            bool senbfr = false, senafr = false;        //true is the sentinels are free
+            int sen = 0;
+            try{
+                p = p - sizeof(int);
+                sen = -(*this)[*p];         //sen will always be positive after this point
+
+                if (sen < 0)
+                    throw std::invalid_argument( "received negative value" );
+
+            }
+            catch (const std::invalid_argument& ia) {
+                std::cerr << "Invalid argument: " << ia.what() << '\n';
+            }
+            catch( ... ){
+                //what to do here ?!
+            }
+
+            if (*p > 4){        // not at beginning 
+                //read the sentinel before it and set senbfr
+                int senb = (*this)[*p - sizeof(int) ];
+                if (senb > 0)
+                    senbfr = true;
+            }
+
+            if ( (N - *p - sen - (2 * sizeof(int))) > 0 ){       //not at the end
+                //read the sentinel after it and set senafr
+                int sena = (*this)[*p + sen + (2 * sizeof(int))];
+                if (sena > 0)
+                    senafr = true;
+                
+            }
+
+            if(senbfr && senafr){
+                int sena = (*this)[ (*p) + (2* sizeof(int)) + sen];         //value of sen after
+                int senb = (*this)[ (*p) - sizeof(int)];         //value of sen before
+                int sen_new = sen + senb + sena + 16;           //value of the new sentinels (combined block)
+
+                (*this)[ (*p) - (2 * sizeof(int)) - senb ] = sen_new;   //changing the 1st sen
+                (*this)[ (*p) + (2 * sizeof(int)) + sen + sena + 8 ] = sen_new;    //changing the 6th/last sen
+            }
+            else if (senbfr && !senafr){    //coalesce with prev chunk
+                int senb = (*this)[(*p) - sizeof(int)];         //value of sen before
+                int sen_new = sen + senb + 8;                   //value of the new sentinels (combined block)
+
+
+                (*this)[ (*p) - (2 * sizeof(int)) - senb ] = sen_new;   //changing the 1st sen
+                (*this)[ (*p) + (2 * sizeof(int)) + sen ] = sen_new;    //changing the 4th/last sen
+
+            }
+            else if (!senbfr && senafr){    //coalesce with next chunk
+                int sena = (*this)[ (*p) + (2* sizeof(int)) + sen];         //value of sen after
+                int sen_new = sen + sena + 8;                   //value of the new sentinels (combined block)
+
+                (*this)[ (*p) ] = sen_new;   //changing the 1st sen
+                (*this)[ (*p) + (2 * sizeof(int)) + sen_new ] = sen_new;    //changing the 4th/last sen
+            }
+            else{
+                (*this)[*p] = -(*this)[*p];
+                (*this)[*p + sen + 4] = -(*this)[*p];
+            }
+
+
+            assert(valid());
+        }
 
         // -------
         // destroy
