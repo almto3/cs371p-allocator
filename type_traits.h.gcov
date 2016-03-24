@@ -153,9 +153,9 @@
         -:  148:  template<typename _Type>
         -:  149:    inline bool
 function _ZN9__gnu_cxx17__is_null_pointerIcEEbPT_ called 0 returned 0% blocks executed 0%
-function _ZN9__gnu_cxx17__is_null_pointerIKcEEbPT_ called 123 returned 100% blocks executed 100%
-      123:  150:    __is_null_pointer(_Type* __ptr)
-      123:  151:    { return __ptr == 0; }
+function _ZN9__gnu_cxx17__is_null_pointerIKcEEbPT_ called 172 returned 100% blocks executed 100%
+      172:  150:    __is_null_pointer(_Type* __ptr)
+      172:  151:    { return __ptr == 0; }
         -:  152:
         -:  153:  template<typename _Type>
         -:  154:    inline bool

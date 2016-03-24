@@ -56,12 +56,14 @@
         -:   51:   *
         -:   52:   *  @c bad_alloc (or classes derived from it) is used to report allocation
         -:   53:   *  errors from the throwing forms of @c new.  */
-        -:   54:  class bad_alloc : public exception 
+function _ZNSt9bad_allocC2ERKS_ called 3 returned 100% blocks executed 100%
+        3:   54:  class bad_alloc : public exception 
+call    0 returned 100%
         -:   55:  {
         -:   56:  public:
-function _ZNSt9bad_allocC2Ev called 0 returned 0% blocks executed 0%
-    #####:   57:    bad_alloc() throw() { }
-call    0 never executed
+function _ZNSt9bad_allocC2Ev called 3 returned 100% blocks executed 100%
+        3:   57:    bad_alloc() throw() { }
+call    0 returned 100%
         -:   58:
         -:   59:    // This declaration is not useless:
         -:   60:    // http://gcc.gnu.org/onlinedocs/gcc-3.0.2/gcc_6.html#SEC118

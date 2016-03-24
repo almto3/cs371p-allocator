@@ -458,8 +458,8 @@ call    4 never executed
         -:  440:  virtual Test* CreateTest() = 0;
         -:  441:
         -:  442: protected:
-function _ZN7testing8internal15TestFactoryBaseC2Ev called 14 returned 100% blocks executed 100%
-       14:  443:  TestFactoryBase() {}
+function _ZN7testing8internal15TestFactoryBaseC2Ev called 26 returned 100% blocks executed 100%
+       26:  443:  TestFactoryBase() {}
         -:  444:
         -:  445: private:
         -:  446:  GTEST_DISALLOW_COPY_AND_ASSIGN_(TestFactoryBase);
@@ -472,6 +472,30 @@ function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_const_index_Test
 function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_const_index_TestED2Ev called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal15TestFactoryImplI25TestAllocator2_index_TestED0Ev called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal15TestFactoryImplI25TestAllocator2_index_TestED2Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI30TestAllocator2_Allocator1_TestED0Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI30TestAllocator2_Allocator1_TestED2Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI30TestAllocator2_Allocator2_TestED0Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI30TestAllocator2_Allocator2_TestED2Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI30TestAllocator2_Allocator3_TestED0Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI30TestAllocator2_Allocator3_TestED2Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI29TestAllocator2_allocate1_TestED0Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI29TestAllocator2_allocate1_TestED2Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI29TestAllocator2_allocate2_TestED0Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI29TestAllocator2_allocate2_TestED2Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI29TestAllocator2_allocate3_TestED0Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI29TestAllocator2_allocate3_TestED2Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI26TestAllocator2_valid1_TestED0Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI26TestAllocator2_valid1_TestED2Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI26TestAllocator2_valid2_TestED0Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI26TestAllocator2_valid2_TestED2Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI26TestAllocator2_valid3_TestED0Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI26TestAllocator2_valid3_TestED2Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_deallocate1_TestED0Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_deallocate1_TestED2Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_deallocate2_TestED0Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_deallocate2_TestED2Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_deallocate3_TestED0Ev called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_deallocate3_TestED2Ev called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal15TestFactoryImplI26TestAllocator1_test_1_TestISaIiEEED0Ev called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal15TestFactoryImplI26TestAllocator1_test_1_TestISaIiEEED2Ev called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal15TestFactoryImplI27TestAllocator1_test_10_TestISaIiEEED0Ev called 0 returned 0% blocks executed 0%
@@ -508,9 +532,21 @@ function _ZN7testing8internal15TestFactoryImplI27TestAllocator3_test_10_TestI9Al
 function _ZN7testing8internal15TestFactoryImplI26TestAllocator3_test_1_TestI9AllocatorIiLm100EEEEC2Ev called 1 returned 100% blocks executed 100%
 function _ZN7testing8internal15TestFactoryImplI27TestAllocator1_test_10_TestISaIiEEEC2Ev called 1 returned 100% blocks executed 100%
 function _ZN7testing8internal15TestFactoryImplI26TestAllocator1_test_1_TestISaIiEEEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_deallocate3_TestEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_deallocate2_TestEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_deallocate1_TestEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN7testing8internal15TestFactoryImplI26TestAllocator2_valid3_TestEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN7testing8internal15TestFactoryImplI26TestAllocator2_valid2_TestEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN7testing8internal15TestFactoryImplI26TestAllocator2_valid1_TestEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN7testing8internal15TestFactoryImplI29TestAllocator2_allocate3_TestEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN7testing8internal15TestFactoryImplI29TestAllocator2_allocate2_TestEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN7testing8internal15TestFactoryImplI29TestAllocator2_allocate1_TestEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN7testing8internal15TestFactoryImplI30TestAllocator2_Allocator3_TestEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN7testing8internal15TestFactoryImplI30TestAllocator2_Allocator2_TestEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN7testing8internal15TestFactoryImplI30TestAllocator2_Allocator1_TestEC2Ev called 1 returned 100% blocks executed 100%
 function _ZN7testing8internal15TestFactoryImplI25TestAllocator2_index_TestEC2Ev called 1 returned 100% blocks executed 100%
 function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_const_index_TestEC2Ev called 1 returned 100% blocks executed 100%
-       14:  452:class TestFactoryImpl : public TestFactoryBase {
+       26:  452:class TestFactoryImpl : public TestFactoryBase {
 call    0 never executed
 call    1 never executed
 call    2 never executed
@@ -595,23 +631,119 @@ call   80 never executed
 branch 81 never executed
 branch 82 never executed
 call   83 never executed
-call   84 returned 100%
-call   85 returned 100%
-call   86 returned 100%
-call   87 returned 100%
-call   88 returned 100%
-call   89 returned 100%
-call   90 returned 100%
-call   91 returned 100%
-call   92 returned 100%
-call   93 returned 100%
-call   94 returned 100%
-call   95 returned 100%
-call   96 returned 100%
-call   97 returned 100%
+call   84 never executed
+call   85 never executed
+call   86 never executed
+branch 87 never executed
+branch 88 never executed
+call   89 never executed
+call   90 never executed
+call   91 never executed
+call   92 never executed
+branch 93 never executed
+branch 94 never executed
+call   95 never executed
+call   96 never executed
+call   97 never executed
+call   98 never executed
+branch 99 never executed
+branch 100 never executed
+call   101 never executed
+call   102 never executed
+call   103 never executed
+call   104 never executed
+branch 105 never executed
+branch 106 never executed
+call   107 never executed
+call   108 never executed
+call   109 never executed
+call   110 never executed
+branch 111 never executed
+branch 112 never executed
+call   113 never executed
+call   114 never executed
+call   115 never executed
+call   116 never executed
+branch 117 never executed
+branch 118 never executed
+call   119 never executed
+call   120 never executed
+call   121 never executed
+call   122 never executed
+branch 123 never executed
+branch 124 never executed
+call   125 never executed
+call   126 never executed
+call   127 never executed
+call   128 never executed
+branch 129 never executed
+branch 130 never executed
+call   131 never executed
+call   132 never executed
+call   133 never executed
+call   134 never executed
+branch 135 never executed
+branch 136 never executed
+call   137 never executed
+call   138 never executed
+call   139 never executed
+call   140 never executed
+branch 141 never executed
+branch 142 never executed
+call   143 never executed
+call   144 never executed
+call   145 never executed
+call   146 never executed
+branch 147 never executed
+branch 148 never executed
+call   149 never executed
+call   150 never executed
+call   151 never executed
+call   152 never executed
+branch 153 never executed
+branch 154 never executed
+call   155 never executed
+call   156 returned 100%
+call   157 returned 100%
+call   158 returned 100%
+call   159 returned 100%
+call   160 returned 100%
+call   161 returned 100%
+call   162 returned 100%
+call   163 returned 100%
+call   164 returned 100%
+call   165 returned 100%
+call   166 returned 100%
+call   167 returned 100%
+call   168 returned 100%
+call   169 returned 100%
+call   170 returned 100%
+call   171 returned 100%
+call   172 returned 100%
+call   173 returned 100%
+call   174 returned 100%
+call   175 returned 100%
+call   176 returned 100%
+call   177 returned 100%
+call   178 returned 100%
+call   179 returned 100%
+call   180 returned 100%
+call   181 returned 100%
         -:  453: public:
 function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_const_index_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
 function _ZN7testing8internal15TestFactoryImplI25TestAllocator2_index_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
+function _ZN7testing8internal15TestFactoryImplI30TestAllocator2_Allocator1_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
+function _ZN7testing8internal15TestFactoryImplI30TestAllocator2_Allocator2_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
+function _ZN7testing8internal15TestFactoryImplI30TestAllocator2_Allocator3_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
+function _ZN7testing8internal15TestFactoryImplI29TestAllocator2_allocate1_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
+function _ZN7testing8internal15TestFactoryImplI29TestAllocator2_allocate2_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
+function _ZN7testing8internal15TestFactoryImplI29TestAllocator2_allocate3_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
+function _ZN7testing8internal15TestFactoryImplI26TestAllocator2_valid1_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
+function _ZN7testing8internal15TestFactoryImplI26TestAllocator2_valid2_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
+function _ZN7testing8internal15TestFactoryImplI26TestAllocator2_valid3_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
+function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_deallocate1_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
+function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_deallocate2_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
+function _ZN7testing8internal15TestFactoryImplI31TestAllocator2_deallocate3_TestE10CreateTestEv called 1 returned 100% blocks executed 83%
 function _ZN7testing8internal15TestFactoryImplI26TestAllocator1_test_1_TestISaIiEEE10CreateTestEv called 1 returned 100% blocks executed 83%
 function _ZN7testing8internal15TestFactoryImplI27TestAllocator1_test_10_TestISaIiEEE10CreateTestEv called 1 returned 100% blocks executed 83%
 function _ZN7testing8internal15TestFactoryImplI26TestAllocator3_test_1_TestI9AllocatorIiLm100EEEE10CreateTestEv called 1 returned 100% blocks executed 83%
@@ -624,7 +756,7 @@ function _ZN7testing8internal15TestFactoryImplI26TestAllocator1_test_1_TestI9All
 function _ZN7testing8internal15TestFactoryImplI27TestAllocator1_test_10_TestI9AllocatorIiLm100EEEE10CreateTestEv called 1 returned 100% blocks executed 83%
 function _ZN7testing8internal15TestFactoryImplI26TestAllocator1_test_1_TestI9AllocatorIdLm100EEEE10CreateTestEv called 1 returned 100% blocks executed 83%
 function _ZN7testing8internal15TestFactoryImplI27TestAllocator1_test_10_TestI9AllocatorIdLm100EEEE10CreateTestEv called 1 returned 100% blocks executed 83%
-       14:  454:  virtual Test* CreateTest() { return new TestClass; }
+       26:  454:  virtual Test* CreateTest() { return new TestClass; }
 call    0 returned 100%
 call    1 returned 100%
 branch  2 taken 100% (fallthrough)
@@ -695,6 +827,66 @@ call   66 returned 100%
 branch 67 taken 100% (fallthrough)
 branch 68 taken 0% (throw)
 call   69 never executed
+call   70 returned 100%
+call   71 returned 100%
+branch 72 taken 100% (fallthrough)
+branch 73 taken 0% (throw)
+call   74 never executed
+call   75 returned 100%
+call   76 returned 100%
+branch 77 taken 100% (fallthrough)
+branch 78 taken 0% (throw)
+call   79 never executed
+call   80 returned 100%
+call   81 returned 100%
+branch 82 taken 100% (fallthrough)
+branch 83 taken 0% (throw)
+call   84 never executed
+call   85 returned 100%
+call   86 returned 100%
+branch 87 taken 100% (fallthrough)
+branch 88 taken 0% (throw)
+call   89 never executed
+call   90 returned 100%
+call   91 returned 100%
+branch 92 taken 100% (fallthrough)
+branch 93 taken 0% (throw)
+call   94 never executed
+call   95 returned 100%
+call   96 returned 100%
+branch 97 taken 100% (fallthrough)
+branch 98 taken 0% (throw)
+call   99 never executed
+call   100 returned 100%
+call   101 returned 100%
+branch 102 taken 100% (fallthrough)
+branch 103 taken 0% (throw)
+call   104 never executed
+call   105 returned 100%
+call   106 returned 100%
+branch 107 taken 100% (fallthrough)
+branch 108 taken 0% (throw)
+call   109 never executed
+call   110 returned 100%
+call   111 returned 100%
+branch 112 taken 100% (fallthrough)
+branch 113 taken 0% (throw)
+call   114 never executed
+call   115 returned 100%
+call   116 returned 100%
+branch 117 taken 100% (fallthrough)
+branch 118 taken 0% (throw)
+call   119 never executed
+call   120 returned 100%
+call   121 returned 100%
+branch 122 taken 100% (fallthrough)
+branch 123 taken 0% (throw)
+call   124 never executed
+call   125 returned 100%
+call   126 returned 100%
+branch 127 taken 100% (fallthrough)
+branch 128 taken 0% (throw)
+call   129 never executed
         -:  455:};
         -:  456:
         -:  457:#if GTEST_OS_WINDOWS

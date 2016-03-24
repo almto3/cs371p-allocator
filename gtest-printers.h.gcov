@@ -432,9 +432,13 @@ branch 15 never executed
         -:  391:}
         -:  392:
         -:  393:// Overloads for other simple built-in types.
-        -:  394:inline void PrintTo(bool x, ::std::ostream* os) {
-        -:  395:  *os << (x ? "true" : "false");
-        -:  396:}
+function _ZN7testing8internal7PrintToEbPSo called 0 returned 0% blocks executed 0%
+    #####:  394:inline void PrintTo(bool x, ::std::ostream* os) {
+    #####:  395:  *os << (x ? "true" : "false");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+    #####:  396:}
         -:  397:
         -:  398:// Overload for wchar_t type.
         -:  399:// Prints a wchar_t as a symbol if it is printable or as its internal
@@ -632,6 +636,7 @@ branch 15 never executed
 function _ZN7testing8internal16UniversalPrinterIdE5PrintERKdPSo called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal16UniversalPrinterIlE5PrintERKlPSo called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal16UniversalPrinterImE5PrintERKmPSo called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal16UniversalPrinterIbE5PrintERKbPSo called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal16UniversalPrinterIiE5PrintERKiPSo called 0 returned 0% blocks executed 0%
     #####:  591:  static void Print(const T& value, ::std::ostream* os) {
         -:  592:    // By default, ::testing::internal::PrintTo() is used for printing
@@ -647,6 +652,7 @@ call    0 never executed
 call    1 never executed
 call    2 never executed
 call    3 never executed
+call    4 never executed
     #####:  601:  }
         -:  602:
         -:  603:#ifdef _MSC_VER
@@ -732,6 +738,7 @@ call    3 never executed
 function _ZN7testing8internal21UniversalTersePrinterIdE5PrintERKdPSo called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal21UniversalTersePrinterIlE5PrintERKlPSo called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal21UniversalTersePrinterImE5PrintERKmPSo called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal21UniversalTersePrinterIbE5PrintERKbPSo called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal21UniversalTersePrinterIiE5PrintERKiPSo called 0 returned 0% blocks executed 0%
     #####:  683:  static void Print(const T& value, ::std::ostream* os) {
     #####:  684:    UniversalPrint(value, os);
@@ -739,6 +746,7 @@ call    0 never executed
 call    1 never executed
 call    2 never executed
 call    3 never executed
+call    4 never executed
     #####:  685:  }
         -:  686:};
         -:  687:template <typename T>
@@ -809,6 +817,7 @@ call    3 never executed
 function _ZN7testing8internal14UniversalPrintIdEEvRKT_PSo called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal14UniversalPrintIlEEvRKT_PSo called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal14UniversalPrintImEEvRKT_PSo called 0 returned 0% blocks executed 0%
+function _ZN7testing8internal14UniversalPrintIbEEvRKT_PSo called 0 returned 0% blocks executed 0%
 function _ZN7testing8internal14UniversalPrintIiEEvRKT_PSo called 0 returned 0% blocks executed 0%
     #####:  752:void UniversalPrint(const T& value, ::std::ostream* os) {
         -:  753:  // A workarond for the bug in VC++ 7.1 that prevents us from instantiating
@@ -819,6 +828,7 @@ call    0 never executed
 call    1 never executed
 call    2 never executed
 call    3 never executed
+call    4 never executed
     #####:  757:}
         -:  758:
         -:  759:#if GTEST_HAS_TR1_TUPLE
@@ -912,6 +922,7 @@ call    3 never executed
 function _ZN7testing13PrintToStringIdEESsRKT_ called 0 returned 0% blocks executed 0%
 function _ZN7testing13PrintToStringIlEESsRKT_ called 0 returned 0% blocks executed 0%
 function _ZN7testing13PrintToStringImEESsRKT_ called 0 returned 0% blocks executed 0%
+function _ZN7testing13PrintToStringIbEESsRKT_ called 0 returned 0% blocks executed 0%
 function _ZN7testing13PrintToStringIiEESsRKT_ called 0 returned 0% blocks executed 0%
     #####:  847:::std::string PrintToString(const T& value) {
     #####:  848:  ::std::stringstream ss;
@@ -931,6 +942,10 @@ call   12 never executed
 call   13 never executed
 branch 14 never executed
 branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
     #####:  849:  internal::UniversalTersePrinter<T>::Print(value, &ss);
 call    0 never executed
 branch  1 never executed
@@ -944,6 +959,9 @@ branch  8 never executed
 call    9 never executed
 branch 10 never executed
 branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
     #####:  850:  return ss.str();
 call    0 never executed
 branch  1 never executed
@@ -965,6 +983,11 @@ branch 16 never executed
 branch 17 never executed
 call   18 never executed
 call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
         -:  851:}
         -:  852:
         -:  853:}  // namespace testing

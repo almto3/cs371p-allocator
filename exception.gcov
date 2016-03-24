@@ -62,11 +62,12 @@
         -:   57:   *  your own %exception classes, or use a different hierarchy, or to
         -:   58:   *  throw non-class data (e.g., fundamental types).
         -:   59:   */
-        -:   60:  class exception
+function _ZNSt9exceptionC2ERKS_ called 3 returned 100% blocks executed 100%
+        3:   60:  class exception
         -:   61:  {
         -:   62:  public:
-function _ZNSt9exceptionC2Ev called 0 returned 0% blocks executed 0%
-    #####:   63:    exception() _GLIBCXX_USE_NOEXCEPT { }
+function _ZNSt9exceptionC2Ev called 3 returned 100% blocks executed 100%
+        3:   63:    exception() _GLIBCXX_USE_NOEXCEPT { }
         -:   64:    virtual ~exception() _GLIBCXX_USE_NOEXCEPT;
         -:   65:
         -:   66:    /** Returns a C-style character string describing the general cause

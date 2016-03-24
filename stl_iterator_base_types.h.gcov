@@ -204,9 +204,9 @@
         -:  199:  template<typename _Iter>
         -:  200:    inline typename iterator_traits<_Iter>::iterator_category
 function _ZSt19__iterator_categoryIPcENSt15iterator_traitsIT_E17iterator_categoryERKS2_ called 0 returned 0% blocks executed 0%
-function _ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_ called 123 returned 100% blocks executed 100%
-      123:  201:    __iterator_category(const _Iter&)
-      123:  202:    { return typename iterator_traits<_Iter>::iterator_category(); }
+function _ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_ called 172 returned 100% blocks executed 100%
+      172:  201:    __iterator_category(const _Iter&)
+      172:  202:    { return typename iterator_traits<_Iter>::iterator_category(); }
         -:  203:
         -:  204:  //@}
         -:  205:

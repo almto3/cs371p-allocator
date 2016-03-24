@@ -93,14 +93,14 @@
         -:   88:  template<typename _RandomAccessIterator>
         -:   89:    inline typename iterator_traits<_RandomAccessIterator>::difference_type
 function _ZSt10__distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_St26random_access_iterator_tag called 0 returned 0% blocks executed 0%
-function _ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag called 123 returned 100% blocks executed 100%
-      123:   90:    __distance(_RandomAccessIterator __first, _RandomAccessIterator __last,
+function _ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag called 172 returned 100% blocks executed 100%
+      172:   90:    __distance(_RandomAccessIterator __first, _RandomAccessIterator __last,
         -:   91:               random_access_iterator_tag)
         -:   92:    {
         -:   93:      // concept requirements
         -:   94:      __glibcxx_function_requires(_RandomAccessIteratorConcept<
         -:   95:				  _RandomAccessIterator>)
-      123:   96:      return __last - __first;
+      172:   96:      return __last - __first;
         -:   97:    }
         -:   98:
         -:   99:  /**
@@ -119,12 +119,12 @@ function _ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St
         -:  112:  template<typename _InputIterator>
         -:  113:    inline typename iterator_traits<_InputIterator>::difference_type
 function _ZSt8distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_ called 0 returned 0% blocks executed 0%
-function _ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_ called 123 returned 100% blocks executed 100%
-      123:  114:    distance(_InputIterator __first, _InputIterator __last)
+function _ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_ called 172 returned 100% blocks executed 100%
+      172:  114:    distance(_InputIterator __first, _InputIterator __last)
         -:  115:    {
         -:  116:      // concept requirements -- taken care of in __distance
         -:  117:      return std::__distance(__first, __last,
-      123:  118:			     std::__iterator_category(__first));
+      172:  118:			     std::__iterator_category(__first));
 call    0 never executed
 call    1 never executed
 call    2 returned 100%

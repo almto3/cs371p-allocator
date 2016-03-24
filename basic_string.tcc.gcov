@@ -126,13 +126,13 @@
         -:  121:    template <typename _InIterator>
         -:  122:      _CharT*
 function _ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag called 0 returned 0% blocks executed 0%
-function _ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag called 140 returned 100% blocks executed 75%
-      140:  123:      basic_string<_CharT, _Traits, _Alloc>::
+function _ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag called 189 returned 100% blocks executed 75%
+      189:  123:      basic_string<_CharT, _Traits, _Alloc>::
         -:  124:      _S_construct(_InIterator __beg, _InIterator __end, const _Alloc& __a,
         -:  125:		   forward_iterator_tag)
         -:  126:      {
         -:  127:#if _GLIBCXX_FULLY_DYNAMIC_STRING == 0
-      140:  128:	if (__beg == __end && __a == _Alloc())
+      189:  128:	if (__beg == __end && __a == _Alloc())
 branch  0 never executed
 branch  1 never executed
 call    2 never executed
@@ -144,17 +144,17 @@ branch  7 never executed
 call    8 never executed
 branch  9 never executed
 branch 10 never executed
-branch 11 taken 12% (fallthrough)
-branch 12 taken 88%
+branch 11 taken 9% (fallthrough)
+branch 12 taken 91%
 call   13 returned 100%
 call   14 returned 100%
 branch 15 taken 100% (fallthrough)
 branch 16 taken 0%
-branch 17 taken 12% (fallthrough)
-branch 18 taken 88%
+branch 17 taken 9% (fallthrough)
+branch 18 taken 91%
 call   19 returned 100%
-branch 20 taken 12% (fallthrough)
-branch 21 taken 88%
+branch 20 taken 9% (fallthrough)
+branch 21 taken 91%
        17:  129:	  return _S_empty_rep()._M_refdata();
 call    0 never executed
 call    1 never executed
@@ -162,7 +162,7 @@ call    2 returned 100%
 call    3 returned 100%
         -:  130:#endif
         -:  131:	// NB: Not required, but considered best practice.
-      123:  132:	if (__gnu_cxx::__is_null_pointer(__beg) && __beg != __end)
+      172:  132:	if (__gnu_cxx::__is_null_pointer(__beg) && __beg != __end)
 call    0 never executed
 branch  1 never executed
 branch  2 never executed
@@ -182,15 +182,15 @@ call    0 never executed
 call    1 never executed
         -:  134:
         -:  135:	const size_type __dnew = static_cast<size_type>(std::distance(__beg,
-      123:  136:								      __end));
+      172:  136:								      __end));
 call    0 never executed
 call    1 returned 100%
         -:  137:	// Check for out_of_range and length_error exceptions.
-      123:  138:	_Rep* __r = _Rep::_S_create(__dnew, size_type(0), __a);
+      172:  138:	_Rep* __r = _Rep::_S_create(__dnew, size_type(0), __a);
 call    0 never executed
 call    1 returned 100%
         -:  139:	__try
-      123:  140:	  { _S_copy_chars(__r->_M_refdata(), __beg, __end); }
+      172:  140:	  { _S_copy_chars(__r->_M_refdata(), __beg, __end); }
 call    0 never executed
 call    1 never executed
 branch  2 never executed
@@ -212,10 +212,10 @@ call    0 never executed
 call    1 never executed
     =====:  144:	    __throw_exception_again;
         -:  145:	  }
-      123:  146:	__r->_M_set_length_and_sharable(__dnew);
+      172:  146:	__r->_M_set_length_and_sharable(__dnew);
 call    0 never executed
 call    1 returned 100%
-      123:  147:	return __r->_M_refdata();
+      172:  147:	return __r->_M_refdata();
 call    0 never executed
 call    1 returned 100%
         -:  148:      }

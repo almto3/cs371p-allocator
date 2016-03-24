@@ -13,7 +13,6 @@
 
 #include <cassert>   // assert
 #include <cstddef>   // ptrdiff_t, size_t
-#include <new>       // bad_alloc, new
 #include <stdexcept> // invalid_argument
 #include <iostream>
 
@@ -77,7 +76,7 @@ class Allocator {
         /**
          * O(1) in space
          * O(n) in time
-         * Basically, this version checks that the sentinels give correct values, doesn't check for the validity of the data, also checks that the first and last sentinels match
+         * Basically, this version checks that the sentinels give correct values, doesn't check for the validity of the data, also checks that the first and last sentinels match each other
          */
         bool valid () const {
 
@@ -127,6 +126,23 @@ class Allocator {
          * https://code.google.com/p/googletest/wiki/AdvancedGuide#Private_Class_Members
          */
         FRIEND_TEST(TestAllocator2, index);
+         
+        FRIEND_TEST(TestAllocator2, Allocator1);
+        FRIEND_TEST(TestAllocator2, Allocator2);
+        FRIEND_TEST(TestAllocator2, Allocator3);
+
+        FRIEND_TEST(TestAllocator2, deallocate1);
+        FRIEND_TEST(TestAllocator2, deallocate2);
+        FRIEND_TEST(TestAllocator2, deallocate3); 
+
+        FRIEND_TEST(TestAllocator2, allocate1);
+        FRIEND_TEST(TestAllocator2, allocate2);
+        FRIEND_TEST(TestAllocator2, allocate3);
+
+        FRIEND_TEST(TestAllocator2, valid1);
+        FRIEND_TEST(TestAllocator2, valid2);
+        FRIEND_TEST(TestAllocator2, valid3);
+        FRIEND_TEST(TestAllocator2, valid4);
 
         int& operator [] (int i) {
             return *reinterpret_cast<int*>(&a[i]);}
@@ -144,26 +160,12 @@ class Allocator {
         Allocator () {//sets sentinels 
             //(*this)[0] = 0; // replace!
             cout << "Allocator() with N = " << N << "\n";
-            try{
+          //  try{
 
               if ( N < ( sizeof(T) + (2 * sizeof(int)) ) )
                 throw std::bad_alloc ();
+
             int sen = N - 8;
-            
-           
-            /*
-
-            s1 = ( sizeof(T) + (2 * sizeof(int)) );
-            s2 = s1;
-            
-            for (int d = 0; d<4; d++)//s1
-                a[d] = (s1 >> (8*d)) & 0xff;
-
-            
-
-            for (int d = 4; d<0; d--)//s2
-                a[N - d] = (s2 >> (8*d)) & 0xff;
-            */
             
 
             (*this)[0] = sen;
@@ -173,16 +175,6 @@ class Allocator {
             cout << "Printing i: " << (*this)[0] << endl;
             cout << "Printing j: " << (*this)[N - 4] << endl;
 
-            }
-            catch (bad_alloc& ia) {
-                std::cerr << "Invalid argument: " << N << " " << ia.what() << '\n';
-
-            }
-            catch( ... ){
-                //what to do here ?!
-            }
-
-            // initialize the variables !!
                 
             assert(valid());
         }
@@ -207,10 +199,11 @@ class Allocator {
         pointer allocate (size_type n) {//finds first fit 
             cout << "allocate() with n = " << n << "\n";
 
-            try{
+            //try{
                 if ((n * sizeof(T)) > (N - 8))
                     throw std::bad_alloc ();
-            }
+            //}
+                /*
             catch (bad_alloc& ia) {
                 std::cerr << "EXCEPTION 1 allocate () with N = " << N << " n = " << n << " s = " << sizeof(T) << "\n" << (n * sizeof(T)) << " " << (N - 8) << "\n" << ia.what() << '\n';
 
@@ -218,7 +211,7 @@ class Allocator {
             catch( ... ){
                 //what to do here ?!
             }
-
+            */
             
             int i = 0;  //i is position of the first sentinel
             int sen = 0; //value of sentinel
@@ -276,8 +269,10 @@ class Allocator {
             if(sen == (n * sizeof(T)) ){        //perfect fit, change pos to neg
                 cout << "perfect fit :)\n"; 
                 (*this)[i] = -(*this)[i];
-                (*this)[i + sen + 4] = -(*this)[i];
+                (*this)[i + sen + 4] = (*this)[i]; // changed a minus 
+                cout << "sen 1 = " <<  (*this)[i] << " at i = " << i << "\n";
 
+                cout << "sen 2 = " << (*this)[i + sen + 4] << " at i = " << i + sen + 4 << "\n";
             }
 
             else {      //not a perfect fit
@@ -456,6 +451,7 @@ class Allocator {
          */
         const int& operator [] (int i) const {
             return *reinterpret_cast<const int*>(&a[i]);}};
+
 
 vector<unsigned char> intToBytes(int paramInt)
 {
