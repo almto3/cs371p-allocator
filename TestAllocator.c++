@@ -97,6 +97,7 @@ TEST(TestAllocator2, index) {
     ASSERT_EQ(x[0], 92);
 }
 
+
 // --------------
 // TestAllocator3
 // --------------
