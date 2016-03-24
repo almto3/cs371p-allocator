@@ -1,8 +1,8 @@
-==21546== Memcheck, a memory error detector
-==21546== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==21546== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==21546== Command: ./TestAllocator
-==21546== 
+==22961== Memcheck, a memory error detector
+==22961== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==22961== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==22961== Command: ./TestAllocator
+==22961== 
 Running main() from gtest_main.cc
 [==========] Running 14 tests from 7 test cases.
 [----------] Global test environment set-up.
@@ -11,14 +11,14 @@ Running main() from gtest_main.cc
 [       OK ] TestAllocator1/0.test_1 (9 ms)
 [ RUN      ] TestAllocator1/0.test_10
 [       OK ] TestAllocator1/0.test_10 (3 ms)
-[----------] 2 tests from TestAllocator1/0 (19 ms total)
+[----------] 2 tests from TestAllocator1/0 (18 ms total)
 
 [----------] 2 tests from TestAllocator1/1, where TypeParam = std::allocator<double>
 [ RUN      ] TestAllocator1/1.test_1
-[       OK ] TestAllocator1/1.test_1 (4 ms)
+[       OK ] TestAllocator1/1.test_1 (5 ms)
 [ RUN      ] TestAllocator1/1.test_10
 [       OK ] TestAllocator1/1.test_10 (3 ms)
-[----------] 2 tests from TestAllocator1/1 (7 ms total)
+[----------] 2 tests from TestAllocator1/1 (8 ms total)
 
 [----------] 2 tests from TestAllocator1/2, where TypeParam = Allocator<int, 100ul>
 [ RUN      ] TestAllocator1/2.test_1
@@ -57,16 +57,16 @@ i = 100, N = 100
 valid() returning true with i = 100, N = 100
 
 
-==21546== Conditional jump or move depends on uninitialised value(s)
-==21546==    at 0x412019: TestAllocator1_test_1_Test<Allocator<int, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546== 
+==22961== Conditional jump or move depends on uninitialised value(s)
+==22961==    at 0x412019: TestAllocator1_test_1_Test<Allocator<int, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961== 
 allocate() ends, with pointer pointing to --> -4
 [       OK ] TestAllocator1/2.test_1 (17 ms)
 [ RUN      ] TestAllocator1/2.test_10
@@ -105,19 +105,19 @@ i = 100, N = 100
 valid() returning true with i = 100, N = 100
 
 
-==21546== Conditional jump or move depends on uninitialised value(s)
-==21546==    at 0x411A03: TestAllocator1_test_10_Test<Allocator<int, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546== 
+==22961== Conditional jump or move depends on uninitialised value(s)
+==22961==    at 0x411A03: TestAllocator1_test_10_Test<Allocator<int, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961== 
 allocate() ends, with pointer pointing to --> -40
-[       OK ] TestAllocator1/2.test_10 (2 ms)
-[----------] 2 tests from TestAllocator1/2 (19 ms total)
+[       OK ] TestAllocator1/2.test_10 (1 ms)
+[----------] 2 tests from TestAllocator1/2 (18 ms total)
 
 [----------] 2 tests from TestAllocator1/3, where TypeParam = Allocator<double, 100ul>
 [ RUN      ] TestAllocator1/3.test_1
@@ -156,18 +156,18 @@ i = 100, N = 100
 valid() returning true with i = 100, N = 100
 
 
-==21546== Conditional jump or move depends on uninitialised value(s)
-==21546==    at 0x4115AA: TestAllocator1_test_1_Test<Allocator<double, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546== 
+==22961== Conditional jump or move depends on uninitialised value(s)
+==22961==    at 0x4115AA: TestAllocator1_test_1_Test<Allocator<double, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961== 
 allocate() ends, with pointer pointing to --> -8
-[       OK ] TestAllocator1/3.test_1 (11 ms)
+[       OK ] TestAllocator1/3.test_1 (10 ms)
 [ RUN      ] TestAllocator1/3.test_10
 Allocator() with N = 100
 Printing s1: 92
@@ -197,18 +197,18 @@ i = 100, N = 100
 valid() returning true with i = 100, N = 100
 
 
-==21546== Conditional jump or move depends on uninitialised value(s)
-==21546==    at 0x410F8C: TestAllocator1_test_10_Test<Allocator<double, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546== 
+==22961== Conditional jump or move depends on uninitialised value(s)
+==22961==    at 0x410F8C: TestAllocator1_test_10_Test<Allocator<double, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961== 
 allocate() ends, with pointer pointing to --> -92
-[       OK ] TestAllocator1/3.test_10 (4 ms)
+[       OK ] TestAllocator1/3.test_10 (5 ms)
 [----------] 2 tests from TestAllocator1/3 (15 ms total)
 
 [----------] 2 tests from TestAllocator2
@@ -226,7 +226,7 @@ i = 100, N = 100
 valid() returning true with i = 100, N = 100
 
 
-[       OK ] TestAllocator2.const_index (1 ms)
+[       OK ] TestAllocator2.const_index (2 ms)
 [ RUN      ] TestAllocator2.index
 Allocator() with N = 100
 Printing s1: 92
@@ -241,7 +241,7 @@ i = 100, N = 100
 valid() returning true with i = 100, N = 100
 
 
-[       OK ] TestAllocator2.index (1 ms)
+[       OK ] TestAllocator2.index (2 ms)
 [----------] 2 tests from TestAllocator2 (4 ms total)
 
 [----------] 2 tests from TestAllocator3/0, where TypeParam = Allocator<int, 100ul>
@@ -281,16 +281,16 @@ i = 100, N = 100
 valid() returning true with i = 100, N = 100
 
 
-==21546== Conditional jump or move depends on uninitialised value(s)
-==21546==    at 0x413D55: TestAllocator3_test_1_Test<Allocator<int, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546== 
+==22961== Conditional jump or move depends on uninitialised value(s)
+==22961==    at 0x413D55: TestAllocator3_test_1_Test<Allocator<int, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961== 
 allocate() ends, with pointer pointing to --> -4
 [       OK ] TestAllocator3/0.test_1 (2 ms)
 [ RUN      ] TestAllocator3/0.test_10
@@ -329,19 +329,19 @@ i = 100, N = 100
 valid() returning true with i = 100, N = 100
 
 
-==21546== Conditional jump or move depends on uninitialised value(s)
-==21546==    at 0x41373F: TestAllocator3_test_10_Test<Allocator<int, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546== 
+==22961== Conditional jump or move depends on uninitialised value(s)
+==22961==    at 0x41373F: TestAllocator3_test_10_Test<Allocator<int, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961== 
 allocate() ends, with pointer pointing to --> -40
-[       OK ] TestAllocator3/0.test_10 (2 ms)
-[----------] 2 tests from TestAllocator3/0 (4 ms total)
+[       OK ] TestAllocator3/0.test_10 (1 ms)
+[----------] 2 tests from TestAllocator3/0 (3 ms total)
 
 [----------] 2 tests from TestAllocator3/1, where TypeParam = Allocator<double, 100ul>
 [ RUN      ] TestAllocator3/1.test_1
@@ -380,18 +380,18 @@ i = 100, N = 100
 valid() returning true with i = 100, N = 100
 
 
-==21546== Conditional jump or move depends on uninitialised value(s)
-==21546==    at 0x412A96: TestAllocator3_test_1_Test<Allocator<double, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546== 
+==22961== Conditional jump or move depends on uninitialised value(s)
+==22961==    at 0x412A96: TestAllocator3_test_1_Test<Allocator<double, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961== 
 allocate() ends, with pointer pointing to --> -8
-[       OK ] TestAllocator3/1.test_1 (3 ms)
+[       OK ] TestAllocator3/1.test_1 (2 ms)
 [ RUN      ] TestAllocator3/1.test_10
 Allocator() with N = 100
 Printing s1: 92
@@ -421,33 +421,33 @@ i = 100, N = 100
 valid() returning true with i = 100, N = 100
 
 
-==21546== Conditional jump or move depends on uninitialised value(s)
-==21546==    at 0x412478: TestAllocator3_test_10_Test<Allocator<double, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
-==21546== 
+==22961== Conditional jump or move depends on uninitialised value(s)
+==22961==    at 0x412478: TestAllocator3_test_10_Test<Allocator<double, 100ul> >::TestBody() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x43B2D2: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DE0C: testing::Test::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DEA3: testing::TestInfo::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42DFA4: testing::TestCase::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E21C: testing::internal::UnitTestImpl::RunAllTests() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x42E4FD: testing::UnitTest::Run() (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961==    by 0x40540F: main (in /v/filer4b/v38q001/almto3/Desktop/cs371p-allocator/TestAllocator)
+==22961== 
 allocate() ends, with pointer pointing to --> -92
-[       OK ] TestAllocator3/1.test_10 (2 ms)
-[----------] 2 tests from TestAllocator3/1 (5 ms total)
+[       OK ] TestAllocator3/1.test_10 (1 ms)
+[----------] 2 tests from TestAllocator3/1 (3 ms total)
 
 [----------] Global test environment tear-down
-[==========] 14 tests from 7 test cases ran. (96 ms total)
+[==========] 14 tests from 7 test cases ran. (93 ms total)
 [  PASSED  ] 14 tests.
-==21546== 
-==21546== HEAP SUMMARY:
-==21546==     in use at exit: 0 bytes in 0 blocks
-==21546==   total heap usage: 710 allocs, 710 frees, 100,279 bytes allocated
-==21546== 
-==21546== All heap blocks were freed -- no leaks are possible
-==21546== 
-==21546== For counts of detected and suppressed errors, rerun with: -v
-==21546== Use --track-origins=yes to see where uninitialised values come from
-==21546== ERROR SUMMARY: 8 errors from 8 contexts (suppressed: 0 from 0)
+==22961== 
+==22961== HEAP SUMMARY:
+==22961==     in use at exit: 0 bytes in 0 blocks
+==22961==   total heap usage: 710 allocs, 710 frees, 100,279 bytes allocated
+==22961== 
+==22961== All heap blocks were freed -- no leaks are possible
+==22961== 
+==22961== For counts of detected and suppressed errors, rerun with: -v
+==22961== Use --track-origins=yes to see where uninitialised values come from
+==22961== ERROR SUMMARY: 8 errors from 8 contexts (suppressed: 0 from 0)
 File 'TestAllocator.c++'
 Lines executed:68.06% of 72
 Branches executed:39.81% of 412
