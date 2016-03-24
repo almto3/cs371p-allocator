@@ -1,0 +1,1305 @@
+        -:    0:Source:Allocator.h
+        -:    0:Graph:TestAllocator.gcno
+        -:    0:Data:TestAllocator.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// ------------------------------
+        -:    2:// projects/allocator/Allocator.h
+        -:    3:// Copyright (C) 2015
+        -:    4:// Glenn P. Downing
+        -:    5:// ------------------------------
+        -:    6:
+        -:    7:#ifndef Allocator_h
+        -:    8:#define Allocator_h
+        -:    9:
+        -:   10:// --------
+        -:   11:// includes
+        -:   12:// --------
+        -:   13:
+        -:   14:#include <cassert>   // assert
+        -:   15:#include <cstddef>   // ptrdiff_t, size_t
+        -:   16:#include <new>       // bad_alloc, new
+        -:   17:#include <stdexcept> // invalid_argument
+        -:   18:#include <iostream>
+        -:   19:
+        -:   20:
+        -:   21:using namespace std;
+        -:   22:// ---------
+        -:   23:// Allocator
+        -:   24:// ---------
+        -:   25:
+        -:   26:
+        -:   27://allocator<double, 100> x;
+        -:   28://double* p = x.allocate(3); // sometimes gives you more than what you are asking for
+        -:   29://…
+        -:   30://x.deallocate(p); // frees a block and maybe coalesces it
+        -:   31:
+        -:   32:template <typename T, std::size_t N>
+        -:   33:class Allocator {
+        -:   34:    public:
+        -:   35:        // --------
+        -:   36:        // typedefs
+        -:   37:        // --------
+        -:   38:
+        -:   39:        typedef T                 value_type;
+        -:   40:
+        -:   41:        typedef std::size_t       size_type;
+        -:   42:        typedef std::ptrdiff_t    difference_type;
+        -:   43:
+        -:   44:        typedef       value_type*       pointer;
+        -:   45:        typedef const value_type* const_pointer;
+        -:   46:
+        -:   47:        typedef       value_type&       reference;
+        -:   48:        typedef const value_type& const_reference;
+        -:   49:
+        -:   50:    public:
+        -:   51:        // -----------
+        -:   52:        // operator ==
+        -:   53:        // -----------
+        -:   54:
+        -:   55:        friend bool operator == (const Allocator&, const Allocator&) {
+        -:   56:            return true;}                                              // this is correct
+        -:   57:
+        -:   58:        // -----------
+        -:   59:        // operator !=
+        -:   60:        // -----------
+        -:   61:
+        -:   62:        friend bool operator != (const Allocator& lhs, const Allocator& rhs) {
+        -:   63:            return !(lhs == rhs);}
+        -:   64:
+        -:   65:    private:
+        -:   66:        // ----
+        -:   67:        // data
+        -:   68:        // ----
+        -:   69:        int s1 = 0, s2 = 0;
+        -:   70:
+        -:   71:        char a[N];
+        -:   72:
+        -:   73:        // -----
+        -:   74:        // valid
+        -:   75:        // -----
+        -:   76:
+        -:   77:        /**
+        -:   78:         * O(1) in space
+        -:   79:         * O(n) in time
+        -:   80:         * Basically, this version checks that the sentinels give correct values, doesn't check for the validity of the data, also checks that the first and last sentinels match
+        -:   81:         */
+function _ZNK9AllocatorIdLm100EE5validEv called 8 returned 100% blocks executed 69%
+function _ZNK9AllocatorIiLm100EE5validEv called 10 returned 100% blocks executed 69%
+       18:   82:        bool valid () const {
+        -:   83:
+       18:   84:            int i = 0;  //i is position/value of the sentinel
+       18:   85:            int sen1 = 0, sen2 = 0;
+        -:   86:            
+       18:   87:            cout << "Valid () \n";
+call    0 returned 100%
+call    1 returned 100%
+       18:   88:            while (i < N){
+branch  0 taken 56%
+branch  1 taken 44% (fallthrough)
+branch  2 taken 58%
+branch  3 taken 42% (fallthrough)
+       24:   89:                cout <<"A: sen1 = " << sen1 << ", sen2 = " << sen2;
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+       24:   90:                cout << "\ni = " << i << ", N = " << N;
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+        -:   91:
+       24:   92:                sen1 = (*this)[i];
+call    0 returned 100%
+call    1 returned 100%
+       24:   93:                cout <<"\nB: sen1 = " << sen1 << " at i = " << i;
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+        -:   94:
+       24:   95:                i = i + 4 + abs(sen1);
+       24:   96:                sen2 = (*this)[i];
+call    0 returned 100%
+call    1 returned 100%
+       24:   97:                cout <<"\tsen2 = " << sen2 << " at i = " << i;
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+        -:   98:
+       24:   99:                i += 4;
+        -:  100:
+       24:  101:                cout << "\ni = " << i << ", N = " << N << "\n\n";
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+        -:  102:
+       24:  103:                if (sen1 != sen2){
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+        -:  104:
+    #####:  105:                    cout <<"valid() returning false because \nsen1 = " << sen1 << ", sen2 = " << sen2;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+    #####:  106:                    cout << "\ni = " << i << ", N = " << N << endl;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  107:                    return false;
+        -:  108:                }
+        -:  109:            }
+        -:  110:            
+        -:  111:
+        -:  112:
+       18:  113:            if (i == N){
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0%
+       18:  114:                cout <<"valid() returning true with i = " << i << ", N = " << N << "\n\n"<<endl;
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+call   10 returned 100%
+call   11 returned 100%
+       18:  115:                return true;
+        -:  116:            }
+        -:  117:            else{
+    #####:  118:                cout <<"valid() returning false because i = " << i << ", N = " << N << endl;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  119:                return false;
+        -:  120:            }
+        -:  121:        }
+        -:  122:
+        -:  123:        /**
+        -:  124:         * O(1) in space
+        -:  125:         * O(1) in time
+        -:  126:         * <your documentation>
+        -:  127:         * https://code.google.com/p/googletest/wiki/AdvancedGuide#Private_Class_Members
+        -:  128:         */
+        -:  129:        FRIEND_TEST(TestAllocator2, index);
+        -:  130:
+function _ZN9AllocatorIdLm100EEixEi called 46 returned 100% blocks executed 100%
+function _ZN9AllocatorIiLm100EEixEi called 49 returned 100% blocks executed 100%
+       95:  131:        int& operator [] (int i) {
+       95:  132:            return *reinterpret_cast<int*>(&a[i]);}
+        -:  133:
+        -:  134:    public:
+        -:  135:        // ------------
+        -:  136:        // constructors
+        -:  137:        // ------------
+        -:  138:
+        -:  139:        /**
+        -:  140:         * O(1) in space
+        -:  141:         * O(1) in time
+        -:  142:         * throw a bad_alloc exception, if N is less than sizeof(T) + (2 * sizeof(int))
+        -:  143:         */
+function _ZN9AllocatorIdLm100EEC2Ev called 4 returned 100% blocks executed 57%
+function _ZN9AllocatorIiLm100EEC2Ev called 6 returned 100% blocks executed 57%
+       10:  144:        Allocator () {//sets sentinels 
+        -:  145:            //(*this)[0] = 0; // replace!
+       10:  146:            cout << "Allocator() with N = " << N << "\n";
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+        -:  147:            try{
+        -:  148:
+       10:  149:              if ( N < ( sizeof(T) + (2 * sizeof(int)) ) )
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+    #####:  150:                throw std::bad_alloc ();
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+       10:  151:            int sen = N - 8;
+        -:  152:            
+        -:  153:           
+        -:  154:            /*
+        -:  155:
+        -:  156:            s1 = ( sizeof(T) + (2 * sizeof(int)) );
+        -:  157:            s2 = s1;
+        -:  158:            
+        -:  159:            for (int d = 0; d<4; d++)//s1
+        -:  160:                a[d] = (s1 >> (8*d)) & 0xff;
+        -:  161:
+        -:  162:            
+        -:  163:
+        -:  164:            for (int d = 4; d<0; d--)//s2
+        -:  165:                a[N - d] = (s2 >> (8*d)) & 0xff;
+        -:  166:            */
+        -:  167:            
+        -:  168:
+       10:  169:            (*this)[0] = sen;
+call    0 returned 100%
+call    1 returned 100%
+       10:  170:            (*this)[N-4] = sen;
+call    0 returned 100%
+call    1 returned 100%
+        -:  171:
+       10:  172:            cout << "Printing s1: " << sen << endl;
+call    0 returned 100%
+branch  1 taken 100% (fallthrough)
+branch  2 taken 0% (throw)
+call    3 returned 100%
+branch  4 taken 100% (fallthrough)
+branch  5 taken 0% (throw)
+call    6 returned 100%
+branch  7 taken 100% (fallthrough)
+branch  8 taken 0% (throw)
+call    9 returned 100%
+branch 10 taken 100% (fallthrough)
+branch 11 taken 0% (throw)
+call   12 returned 100%
+branch 13 taken 100% (fallthrough)
+branch 14 taken 0% (throw)
+call   15 returned 100%
+branch 16 taken 100% (fallthrough)
+branch 17 taken 0% (throw)
+       10:  173:            cout << "Printing i: " << (*this)[0] << endl;
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+branch  8 taken 100% (fallthrough)
+branch  9 taken 0% (throw)
+call   10 returned 100%
+call   11 returned 100%
+branch 12 taken 100% (fallthrough)
+branch 13 taken 0% (throw)
+call   14 returned 100%
+branch 15 taken 100% (fallthrough)
+branch 16 taken 0% (throw)
+call   17 returned 100%
+branch 18 taken 100% (fallthrough)
+branch 19 taken 0% (throw)
+       10:  174:            cout << "Printing j: " << (*this)[N - 4] << endl;
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0% (throw)
+call    4 returned 100%
+branch  5 taken 100% (fallthrough)
+branch  6 taken 0% (throw)
+call    7 returned 100%
+branch  8 taken 100% (fallthrough)
+branch  9 taken 0% (throw)
+call   10 returned 100%
+call   11 returned 100%
+branch 12 taken 100% (fallthrough)
+branch 13 taken 0% (throw)
+call   14 returned 100%
+branch 15 taken 100% (fallthrough)
+branch 16 taken 0% (throw)
+call   17 returned 100%
+branch 18 taken 100% (fallthrough)
+branch 19 taken 0% (throw)
+        -:  175:
+        -:  176:            }
+    =====:  177:            catch (bad_alloc& ia) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+    =====:  178:                std::cerr << "Invalid argument: " << N << " " << ia.what() << '\n';
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+        -:  179:
+        -:  180:            }
+    =====:  181:            catch( ... ){
+call    0 never executed
+call    1 never executed
+        -:  182:                //what to do here ?!
+        -:  183:            }
+        -:  184:
+        -:  185:            // initialize the variables !!
+        -:  186:                
+       10:  187:            assert(valid());
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+call    4 returned 100%
+branch  5 taken 0% (fallthrough)
+branch  6 taken 100%
+call    7 never executed
+       10:  188:        }
+        -:  189:
+        -:  190:        // Default copy, destructor, and copy assignment
+        -:  191:        // Allocator  (const Allocator&);
+        -:  192:        // ~Allocator ();
+        -:  193:        // Allocator& operator = (const Allocator&);
+        -:  194:
+        -:  195:        // --------
+        -:  196:        // allocate
+        -:  197:        // --------
+        -:  198:
+        -:  199:        /**
+        -:  200:         * O(1) in space
+        -:  201:         * O(n) in time
+        -:  202:         * after allocation there must be enough space left for a valid block
+        -:  203:         * the smallest allowable block is sizeof(T) + (2 * sizeof(int))
+        -:  204:         * choose the first block that fits
+        -:  205:         * throw a bad_alloc exception, if n is invalid
+        -:  206:         */
+function _ZN9AllocatorIiLm100EE8allocateEm called 4 returned 100% blocks executed 46%
+function _ZN9AllocatorIdLm100EE8allocateEm called 4 returned 100% blocks executed 69%
+        8:  207:        pointer allocate (size_type n) {//finds first fit 
+        8:  208:            cout << "allocate() with n = " << n << "\n";
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+        -:  209:
+        -:  210:            try{
+        8:  211:                if ((n * sizeof(T)) > (N - 8))
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+    #####:  212:                    throw std::bad_alloc ();
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+        -:  213:            }
+    =====:  214:            catch (bad_alloc& ia) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+    =====:  215:                std::cerr << "EXCEPTION 1 allocate () with N = " << N << " n = " << n << " s = " << sizeof(T) << "\n" << (n * sizeof(T)) << " " << (N - 8) << "\n" << ia.what() << '\n';
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+branch 23 never executed
+branch 24 never executed
+call   25 never executed
+branch 26 never executed
+branch 27 never executed
+call   28 never executed
+branch 29 never executed
+branch 30 never executed
+call   31 never executed
+branch 32 never executed
+branch 33 never executed
+call   34 never executed
+branch 35 never executed
+branch 36 never executed
+call   37 never executed
+branch 38 never executed
+branch 39 never executed
+call   40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+branch 48 never executed
+branch 49 never executed
+call   50 never executed
+branch 51 never executed
+branch 52 never executed
+call   53 never executed
+branch 54 never executed
+branch 55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+branch 63 never executed
+branch 64 never executed
+call   65 never executed
+branch 66 never executed
+branch 67 never executed
+call   68 never executed
+branch 69 never executed
+branch 70 never executed
+call   71 never executed
+branch 72 never executed
+branch 73 never executed
+call   74 never executed
+branch 75 never executed
+branch 76 never executed
+call   77 never executed
+branch 78 never executed
+branch 79 never executed
+        -:  216:
+        -:  217:            }
+    =====:  218:            catch( ... ){
+call    0 never executed
+call    1 never executed
+        -:  219:                //what to do here ?!
+        -:  220:            }
+        -:  221:
+        -:  222:            
+        8:  223:            int i = 0;  //i is position of the first sentinel
+        8:  224:            int sen = 0; //value of sentinel
+        8:  225:            bool ex = false;
+        -:  226:            
+       16:  227:            while (i < N){
+branch  0 taken 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+branch  3 taken 0% (fallthrough)
+        8:  228:                sen = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
+        8:  229:                cout << "while: i = " << i << " sen = " << sen;
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+        8:  230:                if (sen <= 0 ){      //check if it's occupied  //what about zero?!
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+    #####:  231:                    cout << " block1\n";
+call    0 never executed
+call    1 never executed
+    #####:  232:                    i = i + 8 + abs( sen );
+    #####:  233:                    continue;       //test this ?!
+        -:  234:                }
+        -:  235:
+        8:  236:                else if (sen == (n * sizeof(T) ) ){     //perfect fit
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+    #####:  237:                    cout << " block2\n";
+call    0 never executed
+call    1 never executed
+    #####:  238:                    break;
+        -:  239:                }
+        -:  240:
+        8:  241:                else if (sen < (n * sizeof(T) ) ){  //check if it's free, but not enough space
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+    #####:  242:                    cout << " block3\n";
+call    0 never executed
+call    1 never executed
+    #####:  243:                    i = i + 8 + abs( sen );
+    #####:  244:                    continue;       
+        -:  245:                }
+        8:  246:                else if ( (sen - (n * sizeof(T) ) ) < ( sizeof(T) + 8 ) ){  //check if it's free, but not enough space v2
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+branch  2 taken 50% (fallthrough)
+branch  3 taken 50%
+        2:  247:                    cout << " block4 porque: " << (sen - (n * sizeof(T) ) ) << " < " << ( sizeof(T) + 8 ) <<"\n";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+        2:  248:                    cout << n << " " << sizeof(T) << "\n";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+        2:  249:                    ex = true;
+        2:  250:                    break;
+        -:  251:                }
+        -:  252:                else{       //it fits!
+        6:  253:                    cout << " block5\n";
+call    0 returned 100%
+call    1 returned 100%
+        6:  254:                    break;
+        -:  255:                }
+        -:  256:            }
+        -:  257:            // i is either the end of the heap or the address to a valid block
+        -:  258:           
+        -:  259:            //try{
+        8:  260:                if (i == N)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+    #####:  261:                    throw std::bad_alloc ();
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+        -:  262:            //}
+        -:  263:            /*
+        -:  264:            catch (bad_alloc& ia) {
+        -:  265:                std::cerr << "EXCEPTION 2 allocate () with N = " << N << " i = " << i << " n = " << n << " s = " << sizeof(T) << "\n" << (n * sizeof(T)) << " " << (N - 8) << "\n" << ia.what() << '\n';
+        -:  266:
+        -:  267:            }
+        -:  268:            catch( ... ){
+        -:  269:                //what to do here ?!
+        -:  270:            }
+        -:  271:            */
+        -:  272:            // i is a valid block
+        -:  273:
+        -:  274:            //sen = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]); //is this correct? 
+        -:  275:
+        8:  276:            if(sen == (n * sizeof(T)) ){        //perfect fit, change pos to neg
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+    #####:  277:                cout << "perfect fit :)\n"; 
+call    0 never executed
+call    1 never executed
+    #####:  278:                (*this)[i] = -(*this)[i];
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  279:                (*this)[i + sen + 4] = -(*this)[i];
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:  280:
+        -:  281:            }
+        -:  282:
+        -:  283:            else {      //not a perfect fit
+        8:  284:                cout << "not a perfect fit\t"; 
+call    0 returned 100%
+call    1 returned 100%
+        8:  285:                if(ex){
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+branch  2 taken 50% (fallthrough)
+branch  3 taken 50%
+        2:  286:                    cout << ex <<"\n"; 
+call    0 never executed
+call    1 never executed
+call    2 returned 100%
+call    3 returned 100%
+        -:  287:
+        2:  288:                    (*this)[i] = - (n * sizeof(T) ) - (sen - (n * sizeof(T) ) );
+call    0 never executed
+call    1 returned 100%
+        2:  289:                    cout << "sen 1 = " <<  (*this)[i] << " at i = " << i << "\n";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+call   10 returned 100%
+call   11 returned 100%
+        -:  290:
+        2:  291:                    (*this)[i + 4 + - (*this)[i] ] = - (n * sizeof(T) ) - (sen - (n * sizeof(T) ) );
+call    0 never executed
+call    1 never executed
+call    2 returned 100%
+call    3 returned 100%
+        2:  292:                    cout << "sen 2 = " << (*this)[i + 4 + - (*this)[i] ] << " at i = " << i + 4 + - (*this)[i] << "\n";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 returned 100%
+call    9 returned 100%
+call   10 returned 100%
+call   11 returned 100%
+call   12 returned 100%
+call   13 returned 100%
+call   14 returned 100%
+call   15 returned 100%
+        -:  293:                }
+        -:  294:                else{
+        6:  295:                    cout << ex <<"\n"; 
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+        6:  296:                    (*this)[i] = - (n * sizeof(T) );                         //change 1st sen
+call    0 returned 100%
+call    1 returned 100%
+        6:  297:                    (*this)[i + 4 + (n * sizeof(T)) ] = - (n * sizeof(T) ) ;  //change 2nd sen
+call    0 returned 100%
+call    1 returned 100%
+        -:  298:
+        6:  299:                    cout << "sen 1 = " <<  (n * sizeof(T) ) << " at i = " << i << "\n";
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+        6:  300:                    cout << "sen 2 = " <<  (n * sizeof(T) ) << " at i = " << i + 4 + (n * sizeof(T)) << "\n";
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+        -:  301:
+        6:  302:                    int x = sen - 8 - (n * sizeof(T) );
+        -:  303:
+        6:  304:                    cout << "x = " << x << "\n"; 
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+        -:  305:
+        6:  306:                    (*this)[i + 8 + (n * sizeof(T)) ] = x;  //change 3rd sen
+call    0 returned 100%
+call    1 returned 100%
+        -:  307:                    
+        -:  308:                    //vv, changed 12 to 8, not sure if mistake or not ?!
+        6:  309:                    (*this)[i + 12 + (n * sizeof(T)) + x] = x;  //change 4th sen
+call    0 returned 100%
+call    1 returned 100%
+        -:  310:
+        -:  311:
+        6:  312:                    cout << "sen 3 = " << x << " at i = " << i + 8 + (n * sizeof(T)) << "\n";
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+        6:  313:                    cout << "sen 4 = " << x << " at i = " << i + 12 + (n * sizeof(T)) + x << "\n";
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+call    8 returned 100%
+call    9 returned 100%
+        -:  314:                }
+        -:  315:            }
+        -:  316:
+        8:  317:            assert(valid());
+call    0 returned 100%
+branch  1 taken 0% (fallthrough)
+branch  2 taken 100%
+call    3 never executed
+call    4 returned 100%
+branch  5 taken 0% (fallthrough)
+branch  6 taken 100%
+call    7 never executed
+        8:  318:            cout << "allocate() ends, with pointer pointing to --> " << (*this)[i] <<"\n";
+call    0 returned 100%
+call    1 returned 100%
+call    2 returned 100%
+call    3 returned 100%
+call    4 returned 100%
+call    5 returned 100%
+call    6 returned 100%
+call    7 returned 100%
+        -:  319:                                            //we're returning the address to the data, not the sentinel!
+        8:  320:            pointer pi = (pointer)(*this)[i+4];     //totally gussed this one, maybeeee won't work
+call    0 returned 100%
+call    1 returned 100%
+        8:  321:            return pi;
+        -:  322:
+        -:  323:           // return nullptr;                      // return a pointer containg the address of i
+        -:  324:           }             
+        -:  325:
+        -:  326:        // ---------
+        -:  327:        // construct
+        -:  328:        // ---------
+        -:  329:
+        -:  330:        /**
+        -:  331:         * O(1) in space
+        -:  332:         * O(1) in time
+        -:  333:         */
+function _ZN9AllocatorIiLm100EE9constructEPiRKi called 0 returned 0% blocks executed 0%
+function _ZN9AllocatorIdLm100EE9constructEPdRKd called 0 returned 0% blocks executed 0%
+    #####:  334:        void construct (pointer p, const_reference v) {
+    #####:  335:            new (p) T(v);                               // this is correct and exempt
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  336:            assert(valid());}                           // from the prohibition of new
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+        -:  337:
+        -:  338:        // ----------
+        -:  339:        // deallocate
+        -:  340:        // ----------
+        -:  341:
+        -:  342:        /**
+        -:  343:         * O(1) in space
+        -:  344:         * O(1) in time
+        -:  345:         * after deallocation adjacent free blocks must be coalesced
+        -:  346:         * throw an invalid_argument exception, if p is invalid
+        -:  347:         * <your documentation>
+        -:  348:         */
+function _ZN9AllocatorIiLm100EE10deallocateEPim called 0 returned 0% blocks executed 0%
+function _ZN9AllocatorIdLm100EE10deallocateEPdm called 0 returned 0% blocks executed 0%
+    #####:  349:        void deallocate (pointer p, size_type) {
+        -:  350:
+    #####:  351:            cout << "deallocate() with p = " << *p << " and (*this)[*p] = " << (*this)[*p]<< "\n";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+        -:  352:            
+    #####:  353:            bool senbfr = false, senafr = false;        //true is the sentinels are free
+    #####:  354:            int sen = 0;
+        -:  355:            //try{
+        -:  356:                
+        -:  357:
+    #####:  358:                if( (*p < 4) || ( *p > (N-sizeof(int)-sizeof(T)) ) ){
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+    #####:  359:                     cout << "throwing EXCEPTION3";
+call    0 never executed
+call    1 never executed
+    #####:  360:                    throw std::invalid_argument( "received neg value of p " );
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+        -:  361:                }
+        -:  362:                
+    #####:  363:                p = p - sizeof(int);
+    #####:  364:                sen = -(*this)[*p];         //sen will always be positive after this point
+call    0 never executed
+call    1 never executed
+    #####:  365:                cout << "deallocate() with p = " << *p << " and (*this)[*p] = " << (*this)[*p]<< "\n";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+    #####:  366:                if (sen < 0){
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  367:                    cout << "throwing EXCEPTION4";
+call    0 never executed
+call    1 never executed
+    #####:  368:                    throw std::invalid_argument( "received pos value of sen, which means it's already free ");
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+        -:  369:                }
+        -:  370:
+        -:  371:           // }
+        -:  372:            /*
+        -:  373:            catch (const std::invalid_argument& ia) {
+        -:  374:                sen = -sen;
+        -:  375:                std::cerr << "Invalid argument: " <<  ia.what() << " sen = "<< sen <<'\n';
+        -:  376:            }
+        -:  377:            catch( ... ){
+        -:  378:                //what to do here ?!
+        -:  379:            }*/
+    #####:  380:            cout << "*p = " << *p << " sen = " << sen;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+    #####:  381:            if (*p > 4){        // not at beginning 
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  382:                //read the sentinel before it and set senbfr
+    #####:  383:                int senb = (*this)[*p - sizeof(int) ];
+call    0 never executed
+call    1 never executed
+        -:  384:                
+    #####:  385:                if (senb > 0)
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  386:                    senbfr = true;
+    #####:  387:                cout << " senb = " << senb << " senbfr = " << senbfr;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+        -:  388:            }
+        -:  389:
+    #####:  390:            if ( (N - *p - sen - (2 * sizeof(int))) > 0 ){       //not at the end
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  391:                //read the sentinel after it and set senafr
+    #####:  392:                int sena = (*this)[*p + sen + (2 * sizeof(int))];
+call    0 never executed
+call    1 never executed
+    #####:  393:                if (sena > 0)
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  394:                    senafr = true;
+    #####:  395:                cout << " sena = " << sena << " senafr = " << senafr << "\n";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+        -:  396:                
+        -:  397:            }
+        -:  398:
+    #####:  399:            if(senbfr && senafr){
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+    #####:  400:                cout << "Block 1"  << "\n";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  401:                int sena = (*this)[ (*p) + (2* sizeof(int)) + sen];         //value of sen after
+call    0 never executed
+call    1 never executed
+    #####:  402:                int senb = (*this)[ (*p) - sizeof(int)];         //value of sen before
+call    0 never executed
+call    1 never executed
+    #####:  403:                int sen_new = sen + senb + sena + 16;           //value of the new sentinels (combined block)
+        -:  404:
+    #####:  405:                (*this)[ (*p) - (2 * sizeof(int)) - senb ] = sen_new;   //changing the 1st sen
+call    0 never executed
+call    1 never executed
+    #####:  406:                (*this)[ (*p) + (2 * sizeof(int)) + sen + sena + 8 ] = sen_new;    //changing the 6th/last sen
+call    0 never executed
+call    1 never executed
+        -:  407:            }
+    #####:  408:            else if (senbfr && !senafr){    //coalesce with prev chunk
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+        -:  409:
+    #####:  410:                int senb = (*this)[(*p) - sizeof(int)];         //value of sen before
+call    0 never executed
+call    1 never executed
+    #####:  411:                int sen_new = sen + senb + 8;                   //value of the new sentinels (combined block)
+        -:  412:
+    #####:  413:                cout << "Block 2"  << "\n";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  414:                (*this)[ (*p) - (2 * sizeof(int)) - senb ] = sen_new;   //changing the 1st sen
+call    0 never executed
+call    1 never executed
+    #####:  415:                (*this)[ (*p) + (2 * sizeof(int)) + sen ] = sen_new;    //changing the 4th/last sen
+call    0 never executed
+call    1 never executed
+        -:  416:
+        -:  417:            }
+    #####:  418:            else if (!senbfr && senafr){    //coalesce with next chunk
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+    #####:  419:                cout << "Block 3"  << "\n";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  420:                int sena = (*this)[ (*p) + (2* sizeof(int)) + sen];         //value of sen after
+call    0 never executed
+call    1 never executed
+        -:  421:
+    #####:  422:                int sen_new = abs(sen) + sena + 8;                   //value of the new sentinels (combined block)
+        -:  423:
+    #####:  424:                (*this)[ (*p) ] = sen_new;   //changing the 1st sen
+call    0 never executed
+call    1 never executed
+    #####:  425:                (*this)[ (*p) + (sizeof(int)) + sen_new ] = sen_new;    //changing the 4th/last sen
+call    0 never executed
+call    1 never executed
+        -:  426:
+    #####:  427:                cout << "1st sen =  " << (*this)[ (*p) ] << " at " << (*p);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    #####:  428:                cout << " 4th sen =  " << (*this)[ (*p) + (2 * sizeof(int)) + sen_new ] << " at " << (*p) + (2 * sizeof(int)) + sen_new;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+        -:  429:            }
+        -:  430:            else{
+    #####:  431:                 cout << "Block 4"  << "\n";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  432:                (*this)[*p] = -(*this)[*p];
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  433:                (*this)[*p + sen + 4] = -(*this)[*p];
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:  434:            }
+        -:  435:
+    #####:  436:            cout << "deallocate() ends";
+call    0 never executed
+call    1 never executed
+    #####:  437:            assert(valid());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+    #####:  438:        }
+        -:  439:
+        -:  440:        // -------
+        -:  441:        // destroy
+        -:  442:        // -------
+        -:  443:
+        -:  444:        /**
+        -:  445:         * O(1) in space
+        -:  446:         * O(1) in time
+        -:  447:         */
+function _ZN9AllocatorIiLm100EE7destroyEPi called 0 returned 0% blocks executed 0%
+function _ZN9AllocatorIdLm100EE7destroyEPd called 0 returned 0% blocks executed 0%
+    #####:  448:        void destroy (pointer p) {
+        -:  449:            p->~T();               // this is correct
+    #####:  450:            assert(valid());}
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+        -:  451:
+        -:  452:        /**
+        -:  453:         * O(1) in space
+        -:  454:         * O(1) in time
+        -:  455:         * <your documentation>
+        -:  456:         */
+function _ZNK9AllocatorIdLm100EEixEi called 20 returned 100% blocks executed 100%
+function _ZNK9AllocatorIiLm100EEixEi called 29 returned 100% blocks executed 100%
+       49:  457:        const int& operator [] (int i) const {
+       49:  458:            return *reinterpret_cast<const int*>(&a[i]);}};
+        -:  459:
+function _Z10intToBytesi called 0 returned 0% blocks executed 0%
+    #####:  460:vector<unsigned char> intToBytes(int paramInt)
+        -:  461:{
+    #####:  462:     vector<unsigned char> arrayOfByte(4);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+    #####:  463:     for (int i = 0; i < 4; i++)
+branch  0 never executed
+branch  1 never executed
+    #####:  464:         arrayOfByte[3 - i] = (paramInt >> (i * 8));
+call    0 never executed
+    #####:  465:     return arrayOfByte;
+call    0 never executed
+        -:  466:}
+        -:  467:
+        -:  468:#endif // Allocator_h
