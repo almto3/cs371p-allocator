@@ -238,14 +238,15 @@ class Allocator {
                     cout << " block2\n";
                     break;
                 }
-                
+
                 else if (sen < (n * sizeof(T) ) ){  //check if it's free, but not enough space
                     cout << " block3\n";
                     i = i + 8 + abs( sen );
                     continue;       
                 }
                 else if ( (sen - (n * sizeof(T) ) ) < ( sizeof(T) + 8 ) ){  //check if it's free, but not enough space v2
-                    cout << " block4\n";
+                    cout << " block4 porque: " << (sen - (n * sizeof(T) ) ) << " < " << ( sizeof(T) + 8 ) <<"\n";
+                    cout << n << " " << sizeof(T) << "\n";
                     i = i + 8 + abs( sen );
                     continue;     
                 }
