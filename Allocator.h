@@ -127,8 +127,6 @@ class Allocator {
          * https://code.google.com/p/googletest/wiki/AdvancedGuide#Private_Class_Members
          */
         FRIEND_TEST(TestAllocator2, index);
-        FRIEND_TEST(TestAllocator2, index);
-        FRIEND_TEST(TestAllocator11, index);
 
         int& operator [] (int i) {
             return *reinterpret_cast<int*>(&a[i]);}
@@ -224,6 +222,7 @@ class Allocator {
             
             int i = 0;  //i is position of the first sentinel
             int sen = 0; //value of sentinel
+            bool ex = false;
             
             while (i < N){
                 sen = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
@@ -247,8 +246,8 @@ class Allocator {
                 else if ( (sen - (n * sizeof(T) ) ) < ( sizeof(T) + 8 ) ){  //check if it's free, but not enough space v2
                     cout << " block4 porque: " << (sen - (n * sizeof(T) ) ) << " < " << ( sizeof(T) + 8 ) <<"\n";
                     cout << n << " " << sizeof(T) << "\n";
-                    i = i + 8 + abs( sen );
-                    continue;     
+                    ex = true;
+                    break;
                 }
                 else{       //it fits!
                     cout << " block5\n";
@@ -271,39 +270,54 @@ class Allocator {
             }
             */
             // i is a valid block
-            sen = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]); //is this correct? 
+
+            //sen = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]); //is this correct? 
 
             if(sen == (n * sizeof(T)) ){        //perfect fit, change pos to neg
-                cout << "not a perfect fit\n"; 
+                cout << "perfect fit :)\n"; 
                 (*this)[i] = -(*this)[i];
                 (*this)[i + sen + 4] = -(*this)[i];
+
             }
+
             else {      //not a perfect fit
-                cout << "not a perfect fit\n"; 
-                (*this)[i] = - (n * sizeof(T) );                         //change 1st sen
-                (*this)[i + 4 + (n * sizeof(T)) ] = - (n * sizeof(T) ) ;  //change 2nd sen
+                cout << "not a perfect fit\t"; 
+                if(ex){
+                    cout << ex <<"\n"; 
 
-                cout << "sen 1 = " <<  (n * sizeof(T) ) << " at i = " << i << "\n";
-                cout << "sen 2 = " <<  (n * sizeof(T) ) << " at i = " << i + 4 + (n * sizeof(T)) << "\n";
+                    (*this)[i] = - (n * sizeof(T) ) - (sen - (n * sizeof(T) ) );
+                    cout << "sen 1 = " <<  (*this)[i] << " at i = " << i << "\n";
 
-                int x = sen - 8 - (n * sizeof(T) );
+                    (*this)[i + 4 + - (*this)[i] ] = - (n * sizeof(T) ) - (sen - (n * sizeof(T) ) );
+                    cout << "sen 2 = " << (*this)[i + 4 + - (*this)[i] ] << " at i = " << i + 4 + - (*this)[i] << "\n";
+                }
+                else{
+                    cout << ex <<"\n"; 
+                    (*this)[i] = - (n * sizeof(T) );                         //change 1st sen
+                    (*this)[i + 4 + (n * sizeof(T)) ] = - (n * sizeof(T) ) ;  //change 2nd sen
 
-                cout << "x = " << x << "\n"; 
+                    cout << "sen 1 = " <<  (n * sizeof(T) ) << " at i = " << i << "\n";
+                    cout << "sen 2 = " <<  (n * sizeof(T) ) << " at i = " << i + 4 + (n * sizeof(T)) << "\n";
 
-                (*this)[i + 8 + (n * sizeof(T)) ] = x;  //change 3rd sen
-                
-                //vv, changed 12 to 8, not sure if mistake or not ?!
-                (*this)[i + 12 + (n * sizeof(T)) + x] = x;  //change 4th sen
+                    int x = sen - 8 - (n * sizeof(T) );
 
-                
+                    cout << "x = " << x << "\n"; 
 
-                cout << "sen 3 = " << x << " at i = " << i + 8 + (n * sizeof(T)) << "\n";
-                cout << "sen 4 = " << x << " at i = " << i + 12 + (n * sizeof(T)) + x << "\n";
+                    (*this)[i + 8 + (n * sizeof(T)) ] = x;  //change 3rd sen
+                    
+                    //vv, changed 12 to 8, not sure if mistake or not ?!
+                    (*this)[i + 12 + (n * sizeof(T)) + x] = x;  //change 4th sen
+
+
+                    cout << "sen 3 = " << x << " at i = " << i + 8 + (n * sizeof(T)) << "\n";
+                    cout << "sen 4 = " << x << " at i = " << i + 12 + (n * sizeof(T)) + x << "\n";
+                }
             }
 
             assert(valid());
+            cout << "allocate() ends, with pointer pointing to --> " << (*this)[i] <<"\n";
                                             //we're returning the address to the data, not the sentinel!
-            pointer pi = (pointer)&(*this)[i+4];     //totally gussed this one, maybeeee won't work
+            pointer pi = (pointer)(*this)[i+4];     //totally gussed this one, maybeeee won't work
             return pi;
 
            // return nullptr;                      // return a pointer containg the address of i
@@ -339,14 +353,20 @@ class Allocator {
             bool senbfr = false, senafr = false;        //true is the sentinels are free
             int sen = 0;
             //try{
+                
+
+                if( (*p < 4) || ( *p > (N-sizeof(int)-sizeof(T)) ) ){
+                     cout << "throwing EXCEPTION3";
+                    throw std::invalid_argument( "received neg value of p " );
+                }
+                
                 p = p - sizeof(int);
                 sen = -(*this)[*p];         //sen will always be positive after this point
                 cout << "deallocate() with p = " << *p << " and (*this)[*p] = " << (*this)[*p]<< "\n";
-
-                if( (*p < 4) && ( *p > (N-sizeof(int)-sizeof(T)) ) )
-                    throw std::invalid_argument( "received neg value of p " );
-                if (sen < 0)
+                if (sen < 0){
+                    cout << "throwing EXCEPTION4";
                     throw std::invalid_argument( "received pos value of sen, which means it's already free ");
+                }
 
            // }
             /*
