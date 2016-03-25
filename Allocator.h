@@ -16,17 +16,12 @@
 #include <stdexcept> // invalid_argument
 #include <iostream>
 
-
 using namespace std;
+
+
 // ---------
 // Allocator
 // ---------
-
-
-//allocator<double, 100> x;
-//double* p = x.allocate(3); // sometimes gives you more than what you are asking for
-//…
-//x.deallocate(p); // frees a block and maybe coalesces it
 
 template <typename T, std::size_t N>
 class Allocator {
@@ -52,14 +47,16 @@ class Allocator {
         // -----------
 
         friend bool operator == (const Allocator&, const Allocator&) {
-            return true;}                                              // this is correct
+            return true;        // this is correct
+        }                                              
 
         // -----------
         // operator !=
         // -----------
 
         friend bool operator != (const Allocator& lhs, const Allocator& rhs) {
-            return !(lhs == rhs);}
+            return !(lhs == rhs);
+        }
 
     private:
         // ----
@@ -82,39 +79,27 @@ class Allocator {
 
             int i = 0;  //i is position/value of the sentinel
             int sen1 = 0, sen2 = 0;
-            
-            cout << "Valid () \n";
+
+            //while loop will read the sentinels until it reaches the end of the heap
             while (i < N){
-                cout <<"A: sen1 = " << sen1 << ", sen2 = " << sen2;
-                cout << "\ni = " << i << ", N = " << N;
-
+                
                 sen1 = (*this)[i];
-                cout <<"\nB: sen1 = " << sen1 << " at i = " << i;
-
                 i = i + 4 + abs(sen1);
-                sen2 = (*this)[i];
-                cout <<"\tsen2 = " << sen2 << " at i = " << i;
 
+                sen2 = (*this)[i];
                 i += 4;
 
-                cout << "\ni = " << i << ", N = " << N << "\n\n";
-
-                if (sen1 != sen2){
-
-                    cout <<"valid() returning false because \nsen1 = " << sen1 << ", sen2 = " << sen2;
-                    cout << "\ni = " << i << ", N = " << N << endl;
+                if (sen1 != sen2){      //sentinels don't match 
                     return false;
                 }
             }
             
-
-
+            //i has reached the end without any problems 
             if (i == N){
-                cout <<"valid() returning true with i = " << i << ", N = " << N << "\n\n"<<endl;
                 return true;
             }
+            //there's a problem with the heap
             else{
-                cout <<"valid() returning false because i = " << i << ", N = " << N << endl;
                 return false;
             }
         }
@@ -122,7 +107,7 @@ class Allocator {
         /**
          * O(1) in space
          * O(1) in time
-         * <your documentation>
+         * Friend Tests for the unit tests
          * https://code.google.com/p/googletest/wiki/AdvancedGuide#Private_Class_Members
          */
         FRIEND_TEST(TestAllocator2, index);
@@ -145,7 +130,8 @@ class Allocator {
         FRIEND_TEST(TestAllocator2, valid4);
 
         int& operator [] (int i) {
-            return *reinterpret_cast<int*>(&a[i]);}
+            return *reinterpret_cast<int*>(&a[i]);
+        }
 
     public:
         // ------------
@@ -157,25 +143,16 @@ class Allocator {
          * O(1) in time
          * throw a bad_alloc exception, if N is less than sizeof(T) + (2 * sizeof(int))
          */
-        Allocator () {//sets sentinels 
-            //(*this)[0] = 0; // replace!
-            cout << "Allocator() with N = " << N << "\n";
-          //  try{
-
-              if ( N < ( sizeof(T) + (2 * sizeof(int)) ) )
+        Allocator () {//initializes sentinels 
+            
+            if ( N < ( sizeof(T) + (2 * sizeof(int)) ) )
                 throw std::bad_alloc ();
 
             int sen = N - 8;
             
-
             (*this)[0] = sen;
             (*this)[N-4] = sen;
-
-            cout << "Printing s1: " << sen << endl;
-            cout << "Printing i: " << (*this)[0] << endl;
-            cout << "Printing j: " << (*this)[N - 4] << endl;
-
-                
+    
             assert(valid());
         }
 
@@ -197,125 +174,71 @@ class Allocator {
          * throw a bad_alloc exception, if n is invalid
          */
         pointer allocate (size_type n) {//finds first fit 
-            cout << "allocate() with n = " << n << "\n";
-
-            //try{
-                if ((n * sizeof(T)) > (N - 8))
-                    throw std::bad_alloc ();
-            //}
-                /*
-            catch (bad_alloc& ia) {
-                std::cerr << "EXCEPTION 1 allocate () with N = " << N << " n = " << n << " s = " << sizeof(T) << "\n" << (n * sizeof(T)) << " " << (N - 8) << "\n" << ia.what() << '\n';
-
-            }
-            catch( ... ){
-                //what to do here ?!
-            }
-            */
             
-            int i = 0;  //i is position of the first sentinel
-            int sen = 0; //value of sentinel
-            bool ex = false;
+            if ((n * sizeof(T)) > (N - 8))
+                throw std::bad_alloc ();
+            
+            int i = 0;          //i is position of the first sentinel
+            int sen = 0;        //value of sentinel
+            bool ex = false;    //do we need to allocate more space than the user wants?
             
             while (i < N){
-                sen = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]);
-                cout << "while: i = " << i << " sen = " << sen;
-                if (sen <= 0 ){      //check if it's occupied  //what about zero?!
-                    cout << " block1\n";
+                sen = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]); //legacy code
+                
+                if (sen <= 0 ){      //check if it's occupied or free
                     i = i + 8 + abs( sen );
-                    continue;       //test this ?!
+                    continue;
                 }
 
-                else if (sen == (n * sizeof(T) ) ){     //perfect fit
-                    cout << " block2\n";
+                else if (sen == (n * sizeof(T) ) ){     //wooohooo, it's a perfect fit
                     break;
                 }
 
-                else if (sen < (n * sizeof(T) ) ){  //check if it's free, but not enough space
-                    cout << " block3\n";
+                else if (sen < (n * sizeof(T) ) ){  //check if block is free, but not big enough
                     i = i + 8 + abs( sen );
                     continue;       
                 }
-                else if ( (sen - (n * sizeof(T) ) ) < ( sizeof(T) + 8 ) ){  //check if it's free, but not enough space v2
-                    cout << " block4 porque: " << (sen - (n * sizeof(T) ) ) << " < " << ( sizeof(T) + 8 ) <<"\n";
-                    cout << n << " " << sizeof(T) << "\n";
+                else if ( (sen - (n * sizeof(T) ) ) < ( sizeof(T) + 8 ) ){  //check if it's free, but we need to give user more space                    
                     ex = true;
                     break;
                 }
                 else{       //it fits!
-                    cout << " block5\n";
                     break;
                 }
             }
-            // i is either the end of the heap or the address to a valid block
-           
-            //try{
-                if (i == N)
-                    throw std::bad_alloc ();
-            //}
-            /*
-            catch (bad_alloc& ia) {
-                std::cerr << "EXCEPTION 2 allocate () with N = " << N << " i = " << i << " n = " << n << " s = " << sizeof(T) << "\n" << (n * sizeof(T)) << " " << (N - 8) << "\n" << ia.what() << '\n';
 
-            }
-            catch( ... ){
-                //what to do here ?!
-            }
-            */
-            // i is a valid block
+            // by this point, i is either the end of the heap or the address to a valid block        
+            if (i == N)
+                throw std::bad_alloc ();
 
-            //sen = (a[i+3] << 24) | (a[i+2] << 16) | (a[i+1] << 8) | (a[i]); //is this correct? 
-
-            if(sen == (n * sizeof(T)) ){        //perfect fit, change pos to neg
-                cout << "perfect fit :)\n"; 
+            if(sen == (n * sizeof(T)) ){        //perfect fit, just change pos to neg
                 (*this)[i] = -(*this)[i];
-                (*this)[i + sen + 4] = (*this)[i]; // changed a minus 
-                cout << "sen 1 = " <<  (*this)[i] << " at i = " << i << "\n";
-
-                cout << "sen 2 = " << (*this)[i + sen + 4] << " at i = " << i + sen + 4 << "\n";
+                (*this)[i + sen + 4] = (*this)[i]; 
             }
 
             else {      //not a perfect fit
-                cout << "not a perfect fit\t"; 
                 if(ex){
-                    cout << ex <<"\n"; 
-
+                
                     (*this)[i] = - (n * sizeof(T) ) - (sen - (n * sizeof(T) ) );
-                    cout << "sen 1 = " <<  (*this)[i] << " at i = " << i << "\n";
-
                     (*this)[i + 4 + - (*this)[i] ] = - (n * sizeof(T) ) - (sen - (n * sizeof(T) ) );
-                    cout << "sen 2 = " << (*this)[i + 4 + - (*this)[i] ] << " at i = " << i + 4 + - (*this)[i] << "\n";
                 }
                 else{
-                    cout << ex <<"\n"; 
+
                     (*this)[i] = - (n * sizeof(T) );                         //change 1st sen
                     (*this)[i + 4 + (n * sizeof(T)) ] = - (n * sizeof(T) ) ;  //change 2nd sen
 
-                    cout << "sen 1 = " <<  (n * sizeof(T) ) << " at i = " << i << "\n";
-                    cout << "sen 2 = " <<  (n * sizeof(T) ) << " at i = " << i + 4 + (n * sizeof(T)) << "\n";
-
                     int x = sen - 8 - (n * sizeof(T) );
-
-                    cout << "x = " << x << "\n"; 
 
                     (*this)[i + 8 + (n * sizeof(T)) ] = x;  //change 3rd sen
                     
-                    //vv, changed 12 to 8, not sure if mistake or not ?!
+                    //vv, code works, but not sure why we're skipping 3 ints instead of tw, maybe i just had too much coffee?
                     (*this)[i + 12 + (n * sizeof(T)) + x] = x;  //change 4th sen
-
-
-                    cout << "sen 3 = " << x << " at i = " << i + 8 + (n * sizeof(T)) << "\n";
-                    cout << "sen 4 = " << x << " at i = " << i + 12 + (n * sizeof(T)) + x << "\n";
                 }
             }
-
             assert(valid());
-            cout << "allocate() ends, with pointer pointing to --> " << (*this)[i] <<"\n";
-                                            //we're returning the address to the data, not the sentinel!
-            pointer pi = (pointer)(*this)[i+4];     //totally gussed this one, maybeeee won't work
+            //we're returning the address to the data, not the sentinel!
+            pointer pi = (pointer)(*this)[i+4];     //casting to a pointer type
             return pi;
-
-           // return nullptr;                      // return a pointer containg the address of i
            }             
 
         // ---------
@@ -328,7 +251,8 @@ class Allocator {
          */
         void construct (pointer p, const_reference v) {
             new (p) T(v);                               // this is correct and exempt
-            assert(valid());}                           // from the prohibition of new
+            assert(valid());
+        }                           // from the prohibition of new
 
         // ----------
         // deallocate
@@ -339,60 +263,39 @@ class Allocator {
          * O(1) in time
          * after deallocation adjacent free blocks must be coalesced
          * throw an invalid_argument exception, if p is invalid
-         * <your documentation>
+         * deallocate takes an occupied block and frees it, will throw an exception in case the given pointer does not point to the first sentinel of an occupied block
          */
         void deallocate (pointer p, size_type) {
-
-            cout << "deallocate() with p = " << *p << " and (*this)[*p] = " << (*this)[*p]<< "\n";
             
             bool senbfr = false, senafr = false;        //true is the sentinels are free
             int sen = 0;
-            //try{
-                
-
-                if( (*p < 4) || ( *p > (N-sizeof(int)-sizeof(T)) ) ){
-                     cout << "throwing EXCEPTION3";
-                    throw std::invalid_argument( "received neg value of p " );
-                }
-                
-                p = p - sizeof(int);
-                sen = -(*this)[*p];         //sen will always be positive after this point
-                cout << "deallocate() with p = " << *p << " and (*this)[*p] = " << (*this)[*p]<< "\n";
-                if (sen < 0){
-                    cout << "throwing EXCEPTION4";
-                    throw std::invalid_argument( "received pos value of sen, which means it's already free ");
-                }
-
-           // }
-            /*
-            catch (const std::invalid_argument& ia) {
-                sen = -sen;
-                std::cerr << "Invalid argument: " <<  ia.what() << " sen = "<< sen <<'\n';
+           
+            if( (*p < 4) || ( *p > (N-sizeof(int)-sizeof(T)) ) ){
+                throw std::invalid_argument( "received neg value of p " );
             }
-            catch( ... ){
-                //what to do here ?!
-            }*/
-            cout << "*p = " << *p << " sen = " << sen;
+                
+            p = p - sizeof(int);
+            sen = -(*this)[*p];         //sen will always be positive after this point
+
+            if (sen < 0){
+                throw std::invalid_argument( "received pos value of sen, which means it's already free ");
+            }
             if (*p > 4){        // not at beginning 
                 //read the sentinel before it and set senbfr
                 int senb = (*this)[*p - sizeof(int) ];
                 
                 if (senb > 0)
                     senbfr = true;
-                cout << " senb = " << senb << " senbfr = " << senbfr;
             }
-
             if ( (N - *p - sen - (2 * sizeof(int))) > 0 ){       //not at the end
                 //read the sentinel after it and set senafr
                 int sena = (*this)[*p + sen + (2 * sizeof(int))];
                 if (sena > 0)
                     senafr = true;
-                cout << " sena = " << sena << " senafr = " << senafr << "\n";
-                
             }
 
             if(senbfr && senafr){
-                cout << "Block 1"  << "\n";
+                
                 int sena = (*this)[ (*p) + (2* sizeof(int)) + sen];         //value of sen after
                 int senb = (*this)[ (*p) - sizeof(int)];         //value of sen before
                 int sen_new = sen + senb + sena + 16;           //value of the new sentinels (combined block)
@@ -405,30 +308,21 @@ class Allocator {
                 int senb = (*this)[(*p) - sizeof(int)];         //value of sen before
                 int sen_new = sen + senb + 8;                   //value of the new sentinels (combined block)
 
-                cout << "Block 2"  << "\n";
                 (*this)[ (*p) - (2 * sizeof(int)) - senb ] = sen_new;   //changing the 1st sen
                 (*this)[ (*p) + (2 * sizeof(int)) + sen ] = sen_new;    //changing the 4th/last sen
-
             }
             else if (!senbfr && senafr){    //coalesce with next chunk
-                cout << "Block 3"  << "\n";
+                
                 int sena = (*this)[ (*p) + (2* sizeof(int)) + sen];         //value of sen after
-
-                int sen_new = abs(sen) + sena + 8;                   //value of the new sentinels (combined block)
+                int sen_new = abs(sen) + sena + 8;           //value of the new sentinels (combined block)
 
                 (*this)[ (*p) ] = sen_new;   //changing the 1st sen
                 (*this)[ (*p) + (sizeof(int)) + sen_new ] = sen_new;    //changing the 4th/last sen
-
-                cout << "1st sen =  " << (*this)[ (*p) ] << " at " << (*p);
-                cout << " 4th sen =  " << (*this)[ (*p) + (2 * sizeof(int)) + sen_new ] << " at " << (*p) + (2 * sizeof(int)) + sen_new;
             }
             else{
-                 cout << "Block 4"  << "\n";
                 (*this)[*p] = -(*this)[*p];
                 (*this)[*p + sen + 4] = -(*this)[*p];
             }
-
-            cout << "deallocate() ends";
             assert(valid());
         }
 
@@ -442,23 +336,26 @@ class Allocator {
          */
         void destroy (pointer p) {
             p->~T();               // this is correct
-            assert(valid());}
+            assert(valid());
+        }
 
         /**
          * O(1) in space
          * O(1) in time
-         * <your documentation>
+         * interprets bytes to ints from the heap
          */
         const int& operator [] (int i) const {
-            return *reinterpret_cast<const int*>(&a[i]);}};
+            return *reinterpret_cast<const int*>(&a[i]);
+        }
+};
 
+    //takes an it and return the byte representation of it (small endian)
+    vector<unsigned char> intToBytes(int z){
+         vector<unsigned char> v (4);
+         for (int i = 0; i < 4; i++)
+             v[3 - i] = (z >> (i * 8));
+         return v;
+    }
 
-vector<unsigned char> intToBytes(int paramInt)
-{
-     vector<unsigned char> arrayOfByte(4);
-     for (int i = 0; i < 4; i++)
-         arrayOfByte[3 - i] = (paramInt >> (i * 8));
-     return arrayOfByte;
-}
 
 #endif // Allocator_h

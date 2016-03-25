@@ -101,64 +101,69 @@ TEST(TestAllocator2, index) {
 
 
 
-TEST(TestAllocator2, Allocator1) {// bad alloc Allocator, from not initializing w/ enough space 
-   int verifier = 0; 
+
+
+
+
+
+
+TEST(TestAllocator2, Allocator1) {// bad alloc for Allocator, from not initializing w/ enough space 
+  
      try{
         Allocator<char,6 > x;     
-
+          ASSERT_TRUE(false);
      }
      catch(std::bad_alloc ia){
-        //assert(0);
-       
-        verifier++;
+      
      }
-     ASSERT_EQ(verifier,1);
+    
 
 }
 
-TEST(TestAllocator2, Allocator2 ) {// setting Sentinels
+TEST(TestAllocator2, Allocator2 ) {// setting sentinels
      Allocator<double, 50 > x;
     ASSERT_EQ(x[0],42);
+    ASSERT_EQ(x[46],42);
 
 }
 
-TEST(TestAllocator2, Allocator3 ){
+TEST(TestAllocator2, Allocator3 ){// another test, check the sentinels
      Allocator<char, 127> x;
-   // int y = x[0];
     ASSERT_EQ(x[0],119);
+    ASSERT_EQ(x[123],119);
 }
 
 
 
 TEST(TestAllocator2, allocate1){// no fit , throwing bad alloc when heap full
       
-       int verifier = 0;
+    
         Allocator<int, 100> x;
          int* p = x.allocate(23); // 92 bytes
         try {
-       int* q =  x.allocate(1);  
+       int* q =  x.allocate(1); 
+         ASSERT_TRUE(false); 
      }
      catch(std::bad_alloc ia){
-        verifier++;
+      
      }
-     ASSERT_EQ(verifier,1);
 
 }
 
 TEST(TestAllocator2, allocate2){// bad alloc, value in allocate too large 
-   int verifier = 0;
+  
     Allocator<int, 100> x;
      try {
     int * p = x.allocate(25);
+      ASSERT_TRUE(false);
     }
      catch(std::bad_alloc ia){
-        verifier++;
+   
      }
-     ASSERT_EQ(verifier,1);
 
 }
 
-TEST(TestAllocator2, allocate3) {// i guess first fit 
+TEST(TestAllocator2, allocate3) {// first fit 
     Allocator<int, 100> x;
     int a = x[0]; //wtf is this
     ASSERT_EQ(a, 92);
@@ -171,7 +176,7 @@ TEST(TestAllocator2, allocate3) {// i guess first fit
 
 
 
-TEST(TestAllocator2, valid1) {
+TEST(TestAllocator2, valid1) { // valid from one allocation
 
     Allocator<int, 100> x;
      x.allocate(10);
@@ -180,7 +185,7 @@ TEST(TestAllocator2, valid1) {
 }
 
 
-TEST(TestAllocator2, valid2) {
+TEST(TestAllocator2, valid2) { //valid from two allocations
 
     Allocator<int, 100> x;
      int* p = x.allocate(10);
@@ -191,7 +196,7 @@ TEST(TestAllocator2, valid2) {
 }
 
 
-TEST(TestAllocator2, valid3) {
+TEST(TestAllocator2, valid3) { //valid from three allocation
 
     Allocator<int, 100> x;
       x.allocate(2);
@@ -232,7 +237,6 @@ TEST(TestAllocator2, deallocate2){//deallocate, coallesce before
 }
 
 TEST(TestAllocator2, deallocate3) { //catching an exception 
-   int verifier = 0; 
    int z = -10;
    int* zp = &z;
 
@@ -241,14 +245,11 @@ TEST(TestAllocator2, deallocate3) { //catching an exception
 
      try{
         x.deallocate(zp,1);
-
+        ASSERT_TRUE(false);
      }
      catch(std::invalid_argument& e){
-        //assert(0);
        
-        verifier++;
      }
-     ASSERT_EQ(verifier,1);
  }
 
 
@@ -322,4 +323,3 @@ TYPED_TEST(TestAllocator3, test_10) {
             --e;
             x.destroy(e);}
         x.deallocate(b, s);}}
-
