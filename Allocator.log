@@ -1,0 +1,161 @@
+commit 65e1e44d30253f61e0f60737631a4b1aba863c9a
+Author: Asad <syed.asad.mahdi@utexas.edu>
+Date:   Thu Mar 24 20:23:03 2016 -0500
+
+    final stage
+
+commit 52be32cab45526b53b6706ee172d208fe0e95d28
+Author: saleh alghusson <almto3@hotmail.com>
+Date:   Thu Mar 24 20:05:24 2016 -0500
+
+    wrapping up last changes
+
+commit 22f1f70d65d02fa62ff4b683973caf7f2eb99e93
+Author: saleh alghusson <almto3@hotmail.com>
+Date:   Thu Mar 24 18:46:27 2016 -0500
+
+    i think we're done with unit tests, also closes issues 2 and 3
+
+commit 3612ae5374ad900f4b44b382e2d083bb363ab730
+Author: saleh alghusson <almto3@hotmail.com>
+Date:   Thu Mar 24 01:55:43 2016 -0500
+
+    passing all 14 tests
+
+commit 4d0cbb259ec03f98b4130fb7a6254aa3da45a36b
+Author: saleh alghusson <almto3@hotmail.com>
+Date:   Thu Mar 24 01:55:02 2016 -0500
+
+    passing all 14 tests
+
+commit 854a03f5cd31ed8a23f84e6d521161a40035e585
+Author: saleh alghusson <almto3@hotmail.com>
+Date:   Thu Mar 24 01:54:45 2016 -0500
+
+    passing all 14 tests
+
+commit cbadd0efe588256058d0da7f7d8e8ca5e0a0546e
+Author: saleh alghusson <almto3@hotmail.com>
+Date:   Thu Mar 24 01:54:28 2016 -0500
+
+    passing all 14 tests
+
+commit e6a42dcb11b4a2b768ec2349e5371163ad522006
+Author: saleh alghusson <almto3@hotmail.com>
+Date:   Wed Mar 23 23:55:41 2016 -0500
+
+    push to sync our files
+
+commit 77586aa3ed794a304311a45c33d650760a164966
+Author: saleh alghusson <almto3@hotmail.com>
+Date:   Wed Mar 23 23:22:42 2016 -0500
+
+    i think i'm done with allocate(), working on deallocate()
+
+commit 107d9c4ea73f297f8578e603c16a5bf5cd063b80
+Author: saleh alghusson <almto3@hotmail.com>
+Date:   Wed Mar 23 14:01:36 2016 -0500
+
+    git won't push for some reason :'(((((
+
+commit 44fe6baf1a4e7013740b343874baf91b3cacef73
+Author: saleh alghusson <almto3@hotmail.com>
+Date:   Wed Mar 23 13:56:04 2016 -0500
+
+    worked on allocate, still not done
+
+commit 7a34ad4db22ae8f636857a2b62b5e19ddcd321fe
+Author: Asad <syed.asad.mahdi@utexas.edu>
+Date:   Tue Mar 22 21:29:36 2016 -0500
+
+    wrote deallocate
+
+commit 64bf64af29f8149d1385415ee9c6a109724790a8
+Author: Asad <syed.asad.mahdi@utexas.edu>
+Date:   Mon Mar 21 22:49:12 2016 -0500
+
+    worked on allocate() a loooooot
+
+commit a740f7430a1ce58bb5a14e2f5478d49e5378bc1b
+Author: Asad <syed.asad.mahdi@utexas.edu>
+Date:   Fri Mar 11 17:35:53 2016 -0600
+
+    SPRINGGG BREAAAAAAAAAAAAAAK UGHHHHHHHH OMGGGG THE BEACHHHHH
+
+commit 38e47a707bf06b0e2e9aadb219cc68f097b892be
+Author: Asad <syed.asad.mahdi@utexas.edu>
+Date:   Fri Mar 11 16:35:15 2016 -0600
+
+    valid() wasn't as ready as i thought hehe
+
+commit 72b6dc3afcadcdfaea8a294534f0e053cbd6aa82
+Author: System Administrator <root@sal7.local>
+Date:   Fri Mar 11 16:27:14 2016 -0600
+
+    final touches on valid()
+
+commit d6f1d1f263df03620a04d9223c24a43b7c14e35a
+Author: Asad <syed.asad.mahdi@utexas.edu>
+Date:   Thu Mar 10 18:28:22 2016 -0600
+
+    wrote vaild and def constructor
+
+commit d5a6aef08077b996ef10e0b962d6f7733401bbd6
+Author: Asad <syed.asad.mahdi@utexas.edu>
+Date:   Thu Mar 10 17:00:05 2016 -0600
+
+    forgot to save
+
+commit 997e2335fc95f351358fb4a1b29bc489eee024a5
+Author: Asad <syed.asad.mahdi@utexas.edu>
+Date:   Wed Mar 9 20:58:33 2016 -0600
+
+    Started working Allocator
+
+commit 5a606d955a4ac3fdec61197685533b907b4f195a
+Author: Asad <syed.asad.mahdi@utexas.edu>
+Date:   Wed Mar 9 20:40:50 2016 -0600
+
+    modified all the files to match the repo provided
+
+commit 0d70542086a36fe11ad2b49c83f74de2d0bb00e9
+Author: Asad <syed.asad.mahdi@utexas.edu>
+Date:   Wed Mar 9 20:31:03 2016 -0600
+
+    added RunAllocator.out
+
+commit 46d552bce2d5e734d0d239610d123a0c21d740ab
+Author: almto3 <almto3@hotmail.com>
+Date:   Wed Mar 9 20:12:48 2016 -0600
+
+    added main files
+
+commit 08891f30b19a8fc49d9080f475d0b11404699816
+Author: almto3 <almto3@hotmail.com>
+Date:   Wed Mar 9 19:57:51 2016 -0600
+
+    added travis file
+
+commit 971307700eb502b93ca8f31c79fdba7a3170b5ad
+Author: almto3 <almto3@hotmail.com>
+Date:   Wed Mar 9 19:45:06 2016 -0600
+
+    testing
+
+commit 7b6ea99d43068531f80294cc30ccdd30b7739e84
+Author: almto3 <almto3@hotmail.com>
+Date:   Wed Mar 9 19:31:52 2016 -0600
+
+    deleted the last folder
+
+commit 5ec14e5df54bc5a76e107612c39d7fff2448d2d2
+Author: almto3 <almto3@hotmail.com>
+Date:   Wed Mar 9 19:31:09 2016 -0600
+
+    deleted files again, really this time
+
+commit e38e32adfec48efa487ecb1b3b694d61d7c6671e
+Author: almto3 <almto3@hotmail.com>
+Date:   Wed Mar 9 19:25:22 2016 -0600
+
+    first commit
