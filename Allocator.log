@@ -1,3 +1,15 @@
+commit c8a23c6d6e38b31068f3b7292c5629daa123eaea
+Author: System Administrator <root@sal7.local>
+Date:   Thu Mar 24 23:04:54 2016 -0500
+
+    forgot .gitignore lol
+
+commit b81f3d5bdede56d0b4ac70b5cf790ca1e067a260
+Author: System Administrator <root@sal7.local>
+Date:   Thu Mar 24 20:41:40 2016 -0500
+
+    no mas allocator
+
 commit 65e1e44d30253f61e0f60737631a4b1aba863c9a
 Author: Asad <syed.asad.mahdi@utexas.edu>
 Date:   Thu Mar 24 20:23:03 2016 -0500
